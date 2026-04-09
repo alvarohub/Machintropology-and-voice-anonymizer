@@ -8,7 +8,7 @@ This repository describes two different projects:
 
 2. **A machintropological experiment (described in [MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md))** — this is an overreaching experiment, perhaps the first automated ethnographic study of a vibe-coding session conducted by an third agentic observer. The Chronicler observes and narrates the human-AI coding collaboration as it happens, producing a living journal of the process, the [JOURNAL.md](chronicle/Journal.md) which we think may one day replace - or complement - the usual technical README.
 
-It is important to undertand that the projects are inherently independent. The files corresponding to the first project are what one would expect: functional code, vibe-coded here with the help of Copilot/Claude Opus 4.6. It is a real project, part of an ongoing work (see below for details and credits). But it could have been something completely different. 
+It is important to understand that the projects are inherently independent. The files corresponding to the first project are what one would expect: functional code, vibe-coded here with the help of Copilot/Claude Opus 4.6. It is a real project, part of an ongoing work (see below for details and credits). But it could have been something completely different. 
 
 The other files result from a pilot study using a second AI agent (the "Chronicler") to document the vibe-coding session in real time. Together they form the first example example of what I hope will be a series of experiments exploring how humans and AI agents can collaborate as parts of a larger cognitive system — not as tool and user, but as co-agents in a loop where neither fully commands and agency is fluid. 
 
