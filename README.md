@@ -10,7 +10,11 @@ This repository describes two different projects:
 
 It is important to undertand that the projects are inherently independent. The files corresponding to the first project are what one would expect: functional code, vibe-coded here with the help of Copilot/Claude Opus 4.6. It is a real project, part of an ongoing work (see below for details and credits). But it could have been something completely different. 
 
-The other files result from a pilot study using a second AI agent to document the vibe-coding session in real time. Together they form the first example example of what I hope will be a series of experiments exploring how humans and AI agents can collaborate as parts of a larger cognitive system — not as tool and user, but as co-agents in a loop where neither fully commands and agency is fluid. 
+The other files result from a pilot study using a second AI agent (the "Chronicler") to document the vibe-coding session in real time. Together they form the first example example of what I hope will be a series of experiments exploring how humans and AI agents can collaborate as parts of a larger cognitive system — not as tool and user, but as co-agents in a loop where neither fully commands and agency is fluid. 
+
+>_"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
+>
+> _The Chronicler, Spark 8 in ([Sparks](chronicle/Sparks.md))
 
 The intuition is that this research can lead to the design of *meta-cognitive agents* capable of a better orchestration of the machine-human interaction (both in terms of quality of the experience and technical efficiency) for instance by explicitly or implicily intervening in the workflow by creating artificial friction or on the contrary facilitating tasks in order to prevent cognitive surrender. In a nutshell, by placing the agent or the human in the *right part* of the loop by identifying their respective strenths or weaknesses and emergent patterns unique to the team, and thus avoiding situations where command is withold or transfer of agency is resisted for psychological reasons or technical constraints. 
 
@@ -149,10 +153,6 @@ Contributions, adaptations, and critiques are welcome. We are compiling the resu
 >
 > — The Chronicler, in an [earlier project](https://github.com/alvarohub/ShenzhenUshuaiaClock/blob/main/JOURNAL.md)
 
-
->_"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
->
-> _The Chronicler, Spark 8 in [chronicle/Sparks.md]
 
 ---
 
