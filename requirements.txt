@@ -8,3 +8,10 @@ funasr
 torch
 torchaudio
 modelscope         # model hub used by funasr
+
+# Voice Activity Detection
+# (Silero VAD loaded via torch.hub — no extra pip package needed)
+
+# Prosody features
+pyworld            # F0, aperiodicity, spectral envelope
+# opensmile        # optional: richer feature set (jitter, shimmer, MFCC)

@@ -13,6 +13,9 @@ import sounddevice as sd
 
 
 class AudioCapture:
+    # Maximum chunk duration we'll ever support (sets ring buffer size)
+    MAX_CHUNK_SECONDS = 10.0
+
     def __init__(
         self,
         sample_rate: int = 16000,
@@ -20,26 +23,32 @@ class AudioCapture:
         chunk_duration: float = 2.0,
         hop_duration: float = 1.0,
     ):
-        """
-        Args:
-            sample_rate:    Must match the model's expected rate (16 kHz for emotion2vec).
-            channels:       1 = mono (required by most speech models).
-            chunk_duration: Length of each analysis window in seconds.
-            hop_duration:   How many *new* seconds of audio trigger a new chunk.
-        """
         self.sample_rate = sample_rate
         self.channels = channels
         self.chunk_samples = int(chunk_duration * sample_rate)
         self.hop_samples = int(hop_duration * sample_rate)
 
-        # Ring buffer — 4× chunk size gives comfortable headroom
-        buf_size = self.chunk_samples * 4
+        # Ring buffer sized for MAX_CHUNK_SECONDS × 4
+        buf_size = int(self.MAX_CHUNK_SECONDS * sample_rate) * 4
         self._buffer = np.zeros(buf_size, dtype=np.float32)
         self._write_pos = 0
         self._unread_samples = 0
+        self._total_written = 0
         self._lock = threading.Lock()
 
         self._stream: Optional[sd.InputStream] = None
+
+    def set_chunk_duration(self, seconds: float) -> None:
+        """Change the analysis window and hop size at runtime (thread-safe).
+
+        Hop equals window (no overlap) — each chunk is independent.
+        """
+        new_samples = int(seconds * self.sample_rate)
+        max_samples = int(self.MAX_CHUNK_SECONDS * self.sample_rate)
+        new_samples = min(new_samples, max_samples)
+        with self._lock:
+            self.chunk_samples = new_samples
+            self.hop_samples = new_samples
 
     # ---- sounddevice callback (runs in audio thread) ----
 
@@ -58,6 +67,7 @@ class AudioCapture:
                 self._buffer[: n - first] = audio[first:]
             self._write_pos = end % len(self._buffer)
             self._unread_samples += n
+            self._total_written += n
 
     # ---- public API ----
 
@@ -93,3 +103,24 @@ class AudioCapture:
 
             self._unread_samples = 0
             return chunk
+
+    def get_latest_audio(self, seconds: float) -> Optional[np.ndarray]:
+        """Read last *seconds* of audio from ring buffer (non-consuming).
+
+        Unlike get_chunk(), this does NOT reset the unread counter —
+        it's meant for an independent reader (e.g. the prosody LLD thread).
+        Returns None if not enough audio has been captured yet.
+        """
+        n_samples = int(seconds * self.sample_rate)
+        with self._lock:
+            if self._total_written < n_samples:
+                return None
+            n_samples = min(n_samples, len(self._buffer) // 2)
+            read_end = self._write_pos
+            read_start = (read_end - n_samples) % len(self._buffer)
+            if read_start < read_end:
+                return self._buffer[read_start:read_end].copy()
+            else:
+                return np.concatenate(
+                    [self._buffer[read_start:], self._buffer[:read_end]]
+                )

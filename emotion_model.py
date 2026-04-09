@@ -95,10 +95,24 @@ class Emotion2VecModel:
 
     def __init__(
         self,
-        model_name: str = "iic/emotion2vec_plus_large",
+        model_name: str = "iic/emotion2vec_plus_base",
         device: str = "cpu",
     ):
         from funasr import AutoModel  # lazy import keeps startup fast if unused
+        import os
+
+        # If model_name looks like a modelscope ID (e.g. "iic/emotion2vec_plus_base"),
+        # check whether it's already cached locally. Loading from a local path
+        # skips modelscope's download-tracking logic, which would otherwise
+        # re-download model.pt even if we placed it there manually.
+        local_cache = os.path.expanduser(
+            f"~/.cache/modelscope/hub/models/{model_name}"
+        )
+        if os.path.isdir(local_cache) and os.path.exists(
+            os.path.join(local_cache, "model.pt")
+        ):
+            print(f"[model] Loading from local cache: {local_cache}")
+            model_name = local_cache
 
         self._model = AutoModel(model=model_name, device=device)
         self._dimensions = list(self.DIMENSIONS)
@@ -109,25 +123,27 @@ class Emotion2VecModel:
     def dimensions(self) -> list[str]:
         return self._dimensions
 
-    def predict(self, audio: np.ndarray, sr: int = 16000) -> dict:
+    def predict(self, audio: np.ndarray, sr: int = 16000, extract_embedding: bool = False) -> dict:
         """
         Run utterance-level emotion inference on a mono audio chunk.
 
         Args:
-            audio: 1-D float32 numpy array, mono, sampled at *sr* Hz.
-            sr:    Sample rate (emotion2vec expects 16 000).
+            audio:             1-D float32 numpy array, mono, sampled at *sr* Hz.
+            sr:                Sample rate (emotion2vec expects 16 000).
+            extract_embedding: If True, also return the 768-d latent vector.
 
         Returns:
             {
                 "label":      str,
                 "confidence": float,
                 "scores":     {dimension_name: float, …},
+                "embedding":  np.ndarray (768,)  — only if extract_embedding
             }
         """
         result = self._model.generate(
             audio,
             granularity="utterance",
-            extract_embedding=False,
+            extract_embedding=extract_embedding,
         )
 
         # funasr returns a list[dict]; take the first entry
@@ -136,15 +152,26 @@ class Emotion2VecModel:
         labels = entry.get("labels", self._dimensions)
         scores_list = entry.get("scores", [0.0] * len(self._dimensions))
 
+        # emotion2vec_plus returns bilingual labels like "生气/angry".
+        # Normalise to English-only so they match our DIMENSIONS list.
         scores: dict[str, float] = {}
         for lbl, sc in zip(labels, scores_list):
-            scores[lbl] = float(sc)
+            eng = lbl.split("/")[-1] if "/" in lbl else lbl
+            scores[eng] = float(sc)
 
-        top_label = entry.get("text", max(scores, key=scores.get))
+        raw_label = entry.get("text", max(scores, key=scores.get))
+        top_label = raw_label.split("/")[-1] if "/" in raw_label else raw_label
         top_score = scores.get(top_label, 0.0)
 
-        return {
+        out = {
             "label": top_label,
             "confidence": top_score,
             "scores": scores,
         }
+
+        if extract_embedding:
+            feats = entry.get("feats", None)
+            if feats is not None:
+                out["embedding"] = np.asarray(feats, dtype=np.float32)
+
+        return out
