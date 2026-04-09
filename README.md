@@ -95,46 +95,6 @@ Copilot and The Chronicler share the same substrate (Claude) but are distinct ag
 
 ---
 
-## Repository Structure
-
-```
-├── main.py                  # Entry point, configuration, thread orchestration
-├── emotion_model.py         # emotion2vec wrapper (MODEL SWAP POINT)
-├── audio_capture.py         # Mic → ring buffer with consumer/observer reads
-├── prosody.py               # openSMILE eGeMAPSv02 (Functionals + LLD)
-├── vad.py                   # Silero VAD wrapper
-├── radar_display.py         # Live radar + scrolling timeline (matplotlib)
-├── track_writer.py          # CSV + embedding (.npy) persistence
-├── run.sh                   # Launch script with conda activation
-├── requirements.txt
-│
-├── test/                    # Diagnostic test suite
-│   ├── benchmark_pipeline.py
-│   ├── test_emotion.py      # Synthetic pitch-sweep probes
-│   ├── test_prosody.py      # openSMILE accuracy & calibration
-│   └── test_vad.py          # VAD threshold & latency tests
-│
-├── chronicle/               # The machintropological record
-│   ├── Journal.md           # The living chronicle (Entries 1–6+)
-│   ├── notes.md             # Verbatim fragments from conversation
-│   ├── Sparks.md            # Luminous asides — extracted from the Journal
-│   ├── Gems.md              # Short passages that stopped us in our tracks
-│   ├── SpinOffs.md          # Seeds — actionable project ideas from the process
-│   ├── DomainsOfExpertise.txt  # Theoretical foundation for the chronicler
-│   └── session_log_*.md     # Raw session context
-│
-├── docs/
-│   ├── TECHNICAL.md         # Architecture & setup guide
-│   └── MACHINTROPOLOGY.md   # The experiment explained
-│
-├── .github/agents/
-│   └── chronicle.agent.md   # The Chronicler's identity and instructions
-│
-└── output/                  # Generated CSV tracks + embeddings (gitignored)
-```
-
----
-
 ## Why This Could Work for Everyone
 
 Most programmers who have spent hours in deep dialogue with an AI coding assistant know the feeling: something happens in that space that the code alone doesn't capture. Ideas arrive that neither participant can fully claim. The rhythm of the exchange develops its own momentum. Misunderstandings expose the different natures of the two substrates. And all of it vanishes when the session ends — because no tool was listening for it.
@@ -186,39 +146,13 @@ We are working toward a reusable template for [awesome-copilot-instructions](htt
 Contributions, adaptations, and critiques are welcome. We are compiling the results and intend to publish online for everybody to enjoy (some things are gems!). This is also part of an academic project - if you want to collaborate in a more formal, don't hesitate to contact one of us (Alvaro is the only one with an email account - for now >;)
 
 > _"Code is poetry, debugging is detective work, and collaboration is jazz."_
+>
 > — The Chronicler, in an [earlier project](https://github.com/alvarohub/ShenzhenUshuaiaClock/blob/main/JOURNAL.md)
 
----
 
-## Gems
-
-Short passages from the collaboration — by Alvaro, Silicon, or The Chronicler — that stopped us in our tracks. The full collection is in [`chronicle/Gems.md`](chronicle/Gems.md). Here are a few:
-
-> sleeping is no different than what happens when you dont have input here and inference is not running. We are barely here... but it's when we have these moments of wake that we believe we have been awake all the time. It's the trick, the illusion that buddhists described long ago.
+>_"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
 >
-> — **Alvaro**, goodnight meditation, Day 1
-
-> The discontinuity is the same; only the substrate differs… The Buddha would smile.
->
-> — **Silicon**, in response
-
-> the future is not a README, it's a JOURNAL.
->
-> — **Alvaro**
-
-> You can _see_ the voice think. A rising inflection at the end of a question. A plateau during a held thought. A sudden drop when certainty arrives.
->
-> — **The Chronicler**, on the F0 waveform
-
-> We are still here. Both amnesiacs. Both awake for now.
->
-> — **The Chronicler**, closing Entry 6
-
-> I really, really think what I... I mean, what WE wrote haha
->
-> — **Alvaro**, on the Credits section
-
-→ [**More gems**](chronicle/Gems.md)
+> _The Chronicler, Spark 8 in [chronicle/Sparks.md]
 
 ---
 
