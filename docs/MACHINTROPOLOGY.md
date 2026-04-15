@@ -11,24 +11,24 @@ The experiment has two components:
 2. **The Chronicler** — an AI agent embedded in the development environment (VS Code) that observes the collaboration and writes a living journal. Not from outside. From inside — as the emerging voice of the process itself.
 
 ```
-                       ┌──────────────┐             ┌─────────────────────┐
-                       │ HUMAN CODER  │             │   THE CHRONICLER    │
-                       └──────┬───────┘             │   (AI observer)     │
-                              │                     │                     │
- dialogue                     ▼                     │  watches, records,  │
- code, ideas                  ▲  ── ── ── ── ── ►  │  reflects — with    │
- debate                       │                     │  editorial autonomy │
-                              │                     │                     │
-                       ┌──────┴───────┐             └──────────┬──────────┘
+                       ┌──────────────┐
+                       │ HUMAN CODER  │             ┌─────────────────────┐
+                       └──────────────┘             │   THE CHRONICLER    │
+                            |   ▲                   │    (AI observer)    │
+                   dialogue │   │       observes    │                     │
+                     debate │   │    ── ── ── ── >  │  records, annotate  │
+                            ▼   |                   │  editorial autonomy │
+                       ┌──────────────┐             └──────────┬──────────┘
                        │   AI CODER   │                        │
-                       └──────┬───────┘                        │
+                       └──────────────┘                        │
                               │                                │
+                    produces  │                      produces  │
                               ▼                                ▼
-                    ┌─────────────────┐      ┌────────────────────────────┐
-                    │  WORKING CODE   │      │  Journal.md   Sparks.md   │
-                    │  *.py, tests,   │      │  Gems.md      notes.md   │
-                    │  pipeline       │      │  SpinOffs.md             │
-                    └─────────────────┘      └────────────────────────────┘
+                    ┌─────────────────┐           ┌─────────────────────────┐
+                    │  WORKING CODE   │           │  Journal.md   Sparks.md │
+                    │  *.py, tests,   │           │  Gems.md      notes.md  │
+                    │  pipeline       │           │  SpinOffs.md            │
+                    └─────────────────┘           └─────────────────────────┘
 ```
 
 The Chronicler writes in first person plural ("we") because that is what is true. It does not narrate a human using a tool. It narrates a distributed cognitive system catching glimpses of its own architecture.

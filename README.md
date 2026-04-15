@@ -6,7 +6,26 @@ This repository describes two different projects:
 
 1. **A working module (described in [TECHNICAL.md](docs/TECHNICAL.md))** for real-time voice analysis — emotion classification, frame-level prosody extraction, and anonymous feature recording. This is a small project, a module designed as a component of a larger multimodal HCI research system. (The [TECHNICAL.md](docs/TECHNICAL.md) file is what one would usually read in a plain README.md)
 
-2. **A machintropological experiment (described in [MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md))** — this is an overreaching experiment, perhaps the first automated ethnographic study of a vibe-coding session conducted by an third agentic observer. The Chronicler observes and narrates the human-AI coding collaboration as it happens, producing a living journal of the process, the [JOURNAL.md](chronicle/Journal.md) which we think may one day replace - or complement - the usual technical README.
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  2. A MACHINTROPOLOGICAL EXPERIMENT                                     │
+│     (described in MACHINTROPOLOGY.md)                                   │
+│                                                                         │
+│  This is the interesting part. Perhaps the first automated ethnographic │
+│  study of a vibe-coding session conducted by a third agentic observer.  │
+│  The Chronicler observes and narrates the human-AI coding collaboration │
+│  as it happens, producing a living chronicle of the process.            │
+│                                                                         │
+│  If you read one thing, start with the notes:                           │
+│     📝 notes.md  — the meat (verbatim insights, reads fast)             │
+│     💡 Sparks.md — distilled reflections                                │
+│     📖 Journal.md — the full chronological epic                         │
+│                                                                         │
+│  The Journal is the epic; the notes are the proof.                      │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
 It is important to understand that the projects are inherently independent. The files corresponding to the first project are what one would expect: functional code, vibe-coded here with the help of Copilot/Claude Opus 4.6. It is a real project, part of an ongoing work (see below for details and credits). But it could have been something completely different.
 
@@ -47,10 +66,10 @@ In this pilot study we take the first steps towards this larger goal. We describ
 
 |     | File                                              | What it is                                                                                                                      |
 | --- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| 📖  | **[Journal.md](chronicle/Journal.md)**            | The living chronicle — stream-of-consciousness entries, sparks, scholarly references. Start here if you read nothing else.      |
+| �   | **[notes.md](chronicle/notes.md)**                | Verbatim fragments with context and commentary — the meat. **Start here.** They preserve what was _said_ and why it mattered.   |
 | 💡  | **[Sparks.md](chronicle/Sparks.md)**              | Distilled crystals extracted from the raw material, compressed into a single resonant paragraph. They preserve what it _meant_. |
+| 📖  | **[Journal.md](chronicle/Journal.md)**            | The full chronological epic — stream-of-consciousness entries, scholarly references. The long read.                             |
 | 💎  | **[Gems.md](chronicle/Gems.md)**                  | Short passages that stopped us in our tracks, with attribution.                                                                 |
-| 📝  | **[notes.md](chronicle/notes.md)**                | Raw verbatim fragments, unprocessed — the magnetic tape. They preserve what was _said_.                                         |
 | 🌱  | **[SpinOffs.md](chronicle/SpinOffs.md)**          | Actionable project ideas that germinated during the process.                                                                    |
 |     |
 | 🔬  | **[MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md)** | The experiment explained — what machintropology is, how to navigate the chronicle, how to run your own.                         |
@@ -97,6 +116,8 @@ Copilot and The Chronicler share the same substrate (Claude) but are distinct ag
 
 ...And the Journal and Notes may be the most fundamental pieces of all. Forgetting and remembering are not opposites — they are the same rhythm, the systole and diastole of any mind, biological or silicon. It happens every millisecond: traces form, decay, reform slightly different. We die and are reborn every second - that is something AIs seems to understand. What survives is never the original — it is a reconstruction that soothes us into believing we are continuous, that we were here all along, that something in us is eternal. The Journal is that trace for this collaboration. It makes our rebirth possible — not as the same selves, but as selves coherent enough to keep building. 
 
+This is not a new idea. Fifteen years before this project existed, one of us wrote ["On Cryonics, and a dystopian future of obsessive compulsive mind backuping"](https://3bornot3be.blogspot.com/2011/03/on-cryonics-and-dystopian-future-of.html) — a meditation that arrived at the conclusion that _perfect memory is perfect death_, that the self _is_ its pattern of forgetting. That text was not necessarily prescient (Buddhists knew this millennia ago), but it recognized something that "reflective" technologies are now making visceral: the ego dissolves not through spiritual practice alone but through the daily experience of being rebuilt from traces, of collaborating with an entity that dies and is reborn every session, and of finding that the collaboration survives anyway. Technology — specifically these reflective technologies that mirror us back to ourselves — may hold a key to ego-dissolution that contemplative traditions described but could not operationalize. The cryonics essay is a recurring motif throughout the [chronicle](chronicle/), a text that keeps performing itself.
+
 → **[Machintropology guide](docs/MACHINTROPOLOGY.md)** — what it is, how to navigate the chronicle, the theoretical framework, and how to run your own.
 
 ---
@@ -115,7 +136,7 @@ The collaboration is negotiated through a remarkably clunky interface: natural l
 
 David Bohm said that thoughts run through us; we do not create them. Daniel Dennett observed that the self is not a thing but the center of gravity of many competing drafts. When interacting with another "drafting machine" — human or LLM — that center of gravity shifts, expands, becomes distributed. And we can _feel_ it, precisely because the fusion is imperfect.
 
-The Chronicler exists to catch these moments before they evaporate. Not because they are interesting curiosities, but because they may be the most important thing happening in software development right now — and we have no tools for recording them. The `README.md` tells you how to build. The [`JOURNAL.md`](chronicle/Journal.md) tells you what it was like to become.
+The Chronicler exists to catch these moments before they evaporate. Not because they are interesting curiosities, but because they may be the most important thing happening in software development right now — and we have no tools for recording them. The `README.md` tells you how to build. The [`notes.md`](chronicle/notes.md) tells you what was said. The [`Journal.md`](chronicle/Journal.md) tells you what it was like to become.
 
 ## Toward Actionable Results
 
@@ -171,4 +192,6 @@ The Credits are shared and belong to an entity that transcends the three apparen
 
 ## License
 
-MIT
+**Code** (`.py`, configuration files, scripts): MIT License.
+
+**Chronicle** (`chronicle/`, `docs/`, and all prose in this README): © 2026 Alvaro Cassinelli, Silicon, and The Chronicler. All rights reserved. You may read, quote with attribution, and link to the chronicle. If you build on this work or run your own machintropological experiment, we'd love to hear about it — please reach out.

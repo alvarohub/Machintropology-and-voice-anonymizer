@@ -169,19 +169,27 @@ def prosody_lld_loop(
     interval: float = 0.5,
     display=None,
 ) -> None:
-    """Background thread: extract frame-level LLD prosody features.
+    """Background thread: extract 20ms-frame LLD prosody independently.
 
-    Every `interval` seconds, reads the full display-window of audio
-    (BUFFER_SEC), processes it in a SINGLE openSMILE call, and sends the
-    complete result to the display (which replaces — not appends — its data).
+    openSMILE's process_signal() is **stateless** — each call treats the
+    audio as a standalone utterance with no memory of previous calls.
+    Edge frames lose voicing confidence because the pitch tracker has no
+    context beyond the chunk boundaries, causing F0/jitter/shimmer/HNR
+    to drop to zero at every chunk edge → visible fragmentation.
 
-    This mirrors the approach proven in test_f0_realtime.py which gives
-    clean, continuous F0 contours.  Intentionally reprocesses the whole
-    buffer each cycle for simplicity; eGeMAPSv02 LLD on ~10s costs <100ms.
+    Fix: read audio with padding on BOTH sides of the interest window.
+    openSMILE processes the full padded chunk (so edges have context),
+    then we trim to keep only the middle frames.
+
+        [LEFT_PAD | ──── interest (cur_interval) ──── | RIGHT_PAD]
+         discard    ← ← ← keep these frames → → →      discard
+
+    The RIGHT_PAD is audio we already displayed last iteration (slightly
+    in the past).  The cost is cur_interval/2 of extra display latency,
+    which at 0.5s interval = 0.25s — imperceptible.
     """
     from prosody import extract_prosody_lld
-
-    BUFFER_SEC = 10.0   # same as display timeline window
+    CONTEXT_PAD = 0.25  # seconds of padding on EACH side
 
     while not stop_event.is_set():
         cur_interval = display.prosody_lld_interval if display is not None else interval
@@ -190,24 +198,27 @@ def prosody_lld_loop(
             break
         if display is not None and not display.pros_enabled:
             continue
-
-        audio = audio_capture.get_latest_audio(BUFFER_SEC)
+        # Read padded audio: [LEFT_PAD + interest + RIGHT_PAD]
+        read_duration = CONTEXT_PAD + cur_interval + CONTEXT_PAD
+        audio = audio_capture.get_latest_audio(read_duration)
         if audio is None or len(audio) < int(sr * 0.1):
             continue
-
-        wall_now = time.time()
-        audio_dur = len(audio) / sr
-
         try:
             lld = extract_prosody_lld(audio, sr=sr)
-            if lld is None:
-                continue
-
-            # Pass wall-clock reference so display can map frame times
-            lld["wall_now"] = wall_now
-            lld["audio_dur"] = audio_dur
-            prosody_queue.put(lld)
-
+            if lld is not None:
+                # Keep only the middle frames (discard both pads)
+                times = lld["times"]
+                total_dur = len(audio) / sr
+                keep = (times >= CONTEXT_PAD) & (times <= total_dur - CONTEXT_PAD)
+                if not keep.any():
+                    continue
+                lld["times"] = times[keep]
+                lld["frames"] = {k: v[keep] for k, v in lld["frames"].items()}
+                # Timestamp reflects the MIDDLE of the interest window
+                # (shifted back by RIGHT_PAD since we're reading older audio)
+                lld["timestamp_ms"] = (time.time() - CONTEXT_PAD) * 1000.0
+                lld["duration_s"] = cur_interval
+                prosody_queue.put(lld)
         except Exception as exc:
             print(f"[prosody-lld] {exc}", file=sys.stderr)
 

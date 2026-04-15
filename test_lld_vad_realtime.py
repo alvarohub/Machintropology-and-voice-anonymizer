@@ -26,12 +26,11 @@ import threading
 import time
 import signal
 import sys
-import os
 
 # ── Config ──────────────────────────────────────────────────────────
 SR = 16000
 DISPLAY_SEC = 10.0
-MAX_AUDIO_SEC = 12.0
+MAX_AUDIO_SEC = 10.0
 UPDATE_MS = 250          # slightly slower to account for VAD cost
 VAD_THRESHOLD = 0.3      # Silero speech probability threshold
 
@@ -58,15 +57,9 @@ smile = opensmile.Smile(
     feature_level=opensmile.FeatureLevel.LowLevelDescriptors,
 )
 
-# ── Redirect torch hub cache off FUSE (Google Drive) ───────────────
-# torch.hub.load can do blocking I/O for caching. If the workspace is on
-# a FUSE mount (Google Drive), this can deadlock and create unkillable
-# processes. Redirect torch cache to a local (real filesystem) directory.
-_local_cache = os.path.join(os.path.expanduser("~"), ".cache", "torch_hub_local")
-os.makedirs(_local_cache, exist_ok=True)
-torch.hub.set_dir(_local_cache)
-
 # ── Silero VAD ──────────────────────────────────────────────────────
+# Model is already cached at ~/.cache/torch/hub/ (local filesystem).
+# No need to redirect — the default cache dir is NOT on the FUSE mount.
 print("Loading Silero VAD …")
 vad_model, vad_utils = torch.hub.load(
     "snakers4/silero-vad", "silero_vad",

@@ -48,8 +48,8 @@ Microphone
     ▼
 ┌──────────────────┐
 │  AudioCapture    │  sounddevice callback → ring buffer
-│  (audio thread)  │
-└──────────────────┘
+│  (audio thread)  │           │
+└──────────────────┘           │
     │                          │
     │ get_chunk()              │ get_latest_audio()
     │ (consuming, every 2s)    │ (non-consuming, every 0.5s)
@@ -76,7 +76,7 @@ Microphone
     │
     ▼
 ┌──────────────────┐
-│  TrackWriter      │  CSV + .npy embeddings (optional)
+│  TrackWriter     │  CSV + .npy embeddings (optional)
 └──────────────────┘
 ```
 
