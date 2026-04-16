@@ -940,6 +940,8 @@ The practical implication: human-readable output from the observation system is 
 - The transcription itself is a design choice: do you record everything (panopticon) or sample (ethnography)?
 - Alvaro's instinct from the cryonics essay applies here: **"Don't save more often, save better"** — the observer should have selective access, not total surveillance
 
+**The purpose — beyond efficiency.** The goal of the framework is not just to optimize task performance. It is to accommodate different personalities (human or agentic) and help create good habits while avoiding bad ones — cognitive surrender, long deviations from the goal, ego-driven resistance to transferring agency. And perhaps most importantly: to maintain a healthy and enjoyable experience. A good collaboration is a good adventure, and a good adventure is a good story to tell. The chronicle is both the instrument and the proof. _(This framing crystallized during the README rewrite of 16 April 2026 — see the "Vision" section of the README.)_
+
 ---
 
 **11 April 2026 — afternoon, GOAL DYNAMICS AS VISUALIZATION (for the paper)**

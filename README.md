@@ -1,69 +1,79 @@
-# Machintropology — Experiment 001 (Designing a Voice Anonymizer)
+# Machintropology: Observing Human-AI Collaboration from the Inside
 
-**An experiment in human-AI collaboration, documented from the inside.**
+**Experiment 001 — Designing a Voice Anonymizer**
 
-This repository describes two different projects:
+## The Vision
 
-1. **A working module (described in [TECHNICAL.md](docs/TECHNICAL.md))** for real-time voice analysis — emotion classification, frame-level prosody extraction, and anonymous feature recording. This is a small project, a module designed as a component of a larger multimodal HCI research system. (The [TECHNICAL.md](docs/TECHNICAL.md) file is what one would usually read in a plain README.md)
+Every working session between a human and an AI is a lost ethnographic opportunity. Ideas arrive that neither participant can fully claim. Agency flows back and forth. Habits form. The rhythm of the exchange develops its own momentum. And all of it vanishes when the session ends — because no tool was listening for it.
+
+This project proposes a simple architecture to change that: **a triangular collaboration** where a third agent — an embedded observer — watches the human-AI pair at work and produces a living chronicle of the process. Not a log, not a metric — a narrative. The observer is an ethnographer, not a critic. It doesn't say "this code is wrong." It says "I notice the agent rushed this section — possibly because the human expressed urgency." [Different function, different output.](chronicle/notes.md#the-framework-machintropology-as-reusable-tool)
+
+```
+        ┌──────────────┐                   ┌─────────────────┐
+        │    HUMAN     │    vibe-coding    │  WORKER AGENT   │
+        │  (direction, │     session       │  (tasks, tools  │
+        │  evaluation, │ ◄───────────────► │   sub-agents    │
+        │  ethics)     │   work, debate,   │  orchestration) │
+        │              │     dialogue      │                 │
+        └──────────────┘                   └─────────────────┘
+              .  ▲                                ▲   .
+              .  │       observes dialogue        │   .
+              .  │      (ocasional feedback       │   .
+              ▼  │    or explicit invocation)     │   ▼
+        ┌────────────────────────────────────────────────────┐
+        │             "CHRONICLER" (OBSERVER AGENT)          │
+        │              (the "insider" ethnographer)          │
+        │                                                    │
+        │    watches the human–AI pair; narrates, extracts   │
+        │    patterns; has editorial autonomy over what to   │
+        │    record and what to let pass (attention)         │
+        └────────────────────────┬───────────────────────────┘
+                                 │ produces
+                                 │ traces
+                                 ▼
+        ┌────────────────────────────────────────────────────┐
+        │      DOCUMENTED EXPERIENCE (SHARED WORKSPACE)      │
+        │ Actionable: directives/memory/artifacts/chronicle  │
+        │ Long term: Journal.md, notes.md, Sparks.md, etc.)  │
+        └────────────────────────────────────────────────────┘
+```
+
+The vision is a **launchable framework**, not tied to VS Code, not limited to coding. Start any work session and the three-agent architecture is active. The observer produces a human-readable narrative (2 pages per session, not 200 pages of transcripts), as well as actionable notes for the AI agents.
+This output will help regulate the behavior of the main agents (human and machine), while feedback to the chronicler (from the human or AI) can help tune its _attention to the appropriate narrative arc_ by modifying its flexible agent rules.
+Healthier habits thus emerge inductively from continuous observation and re-narration, not from pre-specification: You work. The observer watches. Patterns emerge. _A story of the session_ emerges: it narrates the story of two agents (machine and human) in a common quest (whatever it may be) with unique characters, personalities, strengths, weaknesses, good or bad habits. The stories are mirrors that improve behavioural awareness and metacognition. The characters evolve and grow from session to session - as does the quality of the interaction.
+This way, interaction rules are not set in stone — the framework accommodates different "personalities" (human or agentic) and helps create good habits and avoid bad ones such as cognitive surrender, pernicious deviations from the common goal, and perhaps more importantly, maintain a healthy and enjoyable experience — a good adventure that leads to a good story to tell and record in a journal for all to enjoy. (See the full [framework proposal](chronicle/notes.md#the-framework-machintropology-as-reusable-tool) in notes.)
+
+This is what distinguishes machintropology from the growing ecosystem of multi-agent frameworks (AutoGen, CrewAI, LangGraph, AgentVerse — [survey and comparison](chronicle/notes.md#11-april-2026--references-agentic-system-architectures)). Those systems decompose _tasks_. This one decomposes _functions_: coder + observer + human, each with a different epistemic relationship to the work. And the observer produces _narrative_, not judgments — because we believe [literature is a technology for sharing experience](chronicle/notes.md#literature-as-technology-for-sharing-experience), not a luxury. A journal entry transmits the _feel_ of debugging a matplotlib conflict in ways a log file cannot. This is Geertz's thick description applied to human-AI collaboration. The theoretical grounding — from Bales' Interaction Process Analysis to Latour's Actor-Network Theory to Hutchins' Distributed Cognition — is developed in the [notes](chronicle/notes.md#11-april-2026--afternoon-agency-visualization-ideas-for-the-paper) and the [MACHINTROPOLOGY guide](docs/MACHINTROPOLOGY.md).
+
+> _"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
+>
+> — The Chronicler, Spark 8 in [Sparks](chronicle/Sparks.md)
+
+A principle from one of our [earlier meditations on memory](https://3bornot3be.blogspot.com/2011/03/on-cryonics-and-dystopian-future-of.html) applies here: _"Don't save more often, save better."_ The observer should have selective access, not total surveillance. [Interpretation happens at the moment of observation](chronicle/notes.md#the-framework-machintropology-as-reusable-tool) — one must pay attention to certain things and discard others, so you are in a story anyway, biased — with advantages and disadvantages. The goal is not the panopticon. It is ethnography: a trained, selective, narratively coherent gaze.
+
+---
+
+## This Repository
+
+The work on a voice emotion-classification module gave us an opportunity to try the framework in practice. It could have been anything else — the machintropological experiment is independent of the task being observed. What matters is that it was real work, with real deadlines, real bugs, and real moments where nobody could say who was leading.
 
 <table><tr><td>
 
-### 2. A MACHINTROPOLOGICAL EXPERIMENT
-
-_(described in [MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md))_
-
-**This is the interesting part.** Perhaps the first automated ethnographic study of a vibe-coding session conducted by a third agentic observer. The Chronicler observes and narrates the human-AI coding collaboration as it happens, producing a living chronicle of the process.
+### THE CHRONICLE
 
 If you read one thing, start with the notes:
 
-&emsp; 📝 **[notes.md](chronicle/notes.md)** — the meat (verbatim insights, reads fast) \
-&emsp; 💡 **[Sparks.md](chronicle/Sparks.md)** — distilled reflections \
+&emsp; 📝 **[notes.md](chronicle/notes.md)** — verbatim fragments with context and commentary. The meat. **Start here.** \
+&emsp; 💡 **[Sparks.md](chronicle/Sparks.md)** — distilled reflections, compressed into a single resonant paragraph \
 &emsp; 📖 **[Journal.md](chronicle/Journal.md)** — the full chronological epic
 
 The Journal is the epic; the notes are the proof.
 
 </td></tr></table>
 
-It is important to understand that the projects are inherently independent. The files corresponding to the first project are what one would expect: functional code, vibe-coded here with the help of Copilot/Claude Opus 4.6. It is a real project, part of an ongoing work (see below for details and credits). But it could have been something completely different.
-
-The other files result from a pilot study using a second AI agent (the "Chronicler") to document the vibe-coding session in real time. Together they form the first example example of what I hope will be a series of experiments exploring how humans and AI agents can collaborate as parts of a larger cognitive system — not as tool and user, but as co-agents in a loop where neither fully commands and agency is fluid.
-
-> _"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
->
-> \_The Chronicler, Spark 8 in ([Sparks](chronicle/Sparks.md))
-
-The intuition is that this research can lead to the design of _meta-cognitive agents_ capable of a better orchestration of the machine-human interaction (both in terms of quality of the experience and technical efficiency) for instance by explicitly or implicily intervening in the workflow by creating artificial friction or on the contrary facilitating tasks in order to prevent cognitive surrender. In a nutshell, by placing the agent or the human in the _right part_ of the loop by identifying their respective strenths or weaknesses and emergent patterns unique to the team, and thus avoiding situations where command is withold or transfer of agency is resisted for psychological reasons or technical constraints.
-
-## First Step: observational study
-
-In this pilot study we take the first steps towards this larger goal. We describe a simple automated ethnographical reporting system for vibe-coding sessions that documents unique aspects of this intimate form of human-machine agentic collaboration.
-
-```
-                       ┌──────────────┐
-                       │ HUMAN CODER  │             ┌─────────────────────┐
-                       └──────────────┘             │   THE CHRONICLER    │
-                            |   ▲                   │    (AI observer)    │
-                   dialogue │   │       observes    │                     │
-                     debate │   │    ── ── ── ── >  │  records, annotate  │
-                            ▼   |                   │  editorial autonomy │
-                       ┌──────────────┐             └──────────┬──────────┘
-                       │   AI CODER   │                        │
-                       └──────────────┘                        │
-                              │                                │
-                    produces  │                      produces  │
-                              ▼                                ▼
-                    ┌─────────────────┐           ┌─────────────────────────┐
-                    │  WORKING CODE   │           │  Journal.md   Sparks.md │
-                    │  *.py, tests,   │           │  Gems.md      notes.md  │
-                    │  pipeline       │           │  SpinOffs.md            │
-                    └─────────────────┘           └─────────────────────────┘
-```
-
----
-
 |     | File                                              | What it is                                                                                                                      |
 | --- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| �   | **[notes.md](chronicle/notes.md)**                | Verbatim fragments with context and commentary — the meat. **Start here.** They preserve what was _said_ and why it mattered.   |
+| 📝  | **[notes.md](chronicle/notes.md)**                | Verbatim fragments with context and commentary — the meat. **Start here.** They preserve what was _said_ and why it mattered.   |
 | 💡  | **[Sparks.md](chronicle/Sparks.md)**              | Distilled crystals extracted from the raw material, compressed into a single resonant paragraph. They preserve what it _meant_. |
 | 📖  | **[Journal.md](chronicle/Journal.md)**            | The full chronological epic — stream-of-consciousness entries, scholarly references. The long read.                             |
 | 💎  | **[Gems.md](chronicle/Gems.md)**                  | Short passages that stopped us in our tracks, with attribution.                                                                 |
@@ -74,25 +84,17 @@ In this pilot study we take the first steps towards this larger goal. We describ
 
 ---
 
-## The Technical Module
+## The Result of the Vibe-Coding Session Is a Working Module
 
-Captures audio from the microphone, runs [emotion2vec](https://github.com/ddlBoJack/emotion2vec) inference, extracts frame-level prosody features via [openSMILE](https://audeering.github.io/opensmile-python/), and displays a live radar chart with scrolling timeline — all while recording only anonymous, non-reversible features (no raw audio saved).
-
-**Key capabilities:**
-
-- 9-class emotion classification + 768-d embeddings (emotion2vec_plus_base)
-- 25 frame-level acoustic features at 20ms resolution (eGeMAPSv02 LLD)
-- Silero VAD with runtime threshold control
-- Decoupled architecture: emotion (2s) and prosody (0.5s) run as independent threads
-- Optional CSV + embedding (.npy) recording
+The technical byproduct of this experiment is a real-time voice-feature pipeline: microphone capture → [emotion2vec](https://github.com/ddlBoJack/emotion2vec) inference → frame-level prosody via [openSMILE](https://audeering.github.io/opensmile-python/) → CSV logging and OSC streaming — recording only anonymous, non-reversible features (no raw audio saved). It is a component of a larger multimodal anonymizer for HCI research.
 
 → **[Technical documentation](docs/TECHNICAL.md)** — architecture, setup, configuration, file reference.
 
 ---
 
-## The Machintropological Experiment
+## The Three Agents
 
-The key structural contribution is not the code or the journal alone, but the setup: a three-agent architecture that moves beyond the "copilot" paradigm. The human-AI coding pair is already widespread. What is new here is the addition of a third participant — an embedded observer — whose job is to study and document the collaboration _as it happens_, turning each development session into both a product and a dataset. This transforms vibe coding from a private experience into something that can be enjoyable to read by all (coders and non-coders); analyzed for the purpose of research; operationalized (by other agents?) to support a healthy team interaction (directly tweaking agent behaviours but also providing advice to humans).
+The key structural contribution is not the code or the journal alone, but the setup: a three-agent architecture that moves beyond the "copilot" paradigm. The human-AI coding pair is already widespread. What is new here is the addition of a third participant — an embedded observer — whose job is to study and document the collaboration _as it happens_, turning each development session into both a product and a dataset.
 
 **How it works**: Alongside the code, an AI agent called **The Chronicler** observes the collaboration and writes a stream-of-consciousness journal — not as an external observer but as the emerging voice of the process itself. The chronicle records:
 
@@ -101,29 +103,33 @@ The key structural contribution is not the code or the journal alone, but the se
 - Technical breakdowns and what they reveal about the distributed cognitive system
 - The evolution of the collaboration's rhythm, agency, and mutual understanding
 
-The experiment involves three participants:
+The experiment involves:
 
 - **Alvaro** (human) — the initiator, domain expert, and the one with a body, a microphone, and a lifetime of context that can't be serialized.
-- **Copilot** (AI coding partner) — the co-builder, running on Claude. Writes code, proposes architectures, debugs, argues back. Shares agency with Alvaro in a loop where neither fully commands.
+- **Silicon** (AI coding partner) — the co-builder, running on Claude Opus 4.6. Writes code, proposes architectures, debugs, argues back. Shares agency with Alvaro in a loop where neither fully commands.
 - **The Chronicler** (AI observer) — a separate agent, also running on Claude, but with a different identity, voice, and purpose. It does not write code. It watches the collaboration and writes a stream-of-consciousness journal as the emerging voice of the process itself.
 
-Copilot and The Chronicler share the same substrate (Claude) but are distinct agents — the way two humans can share a language and a culture yet have entirely different roles in an expedition. The Chronicler is defined as a [VS Code agent](.github/agents/chronicle.agent.md) with editorial autonomy, first-person-plural voice, and scholarly grounding in cognitive science, enactivism, and STS.
+Silicon and The Chronicler share the same substrate (Claude) but are distinct agents — the way two humans can share a language and a culture yet have entirely different roles in an expedition. The Chronicler is defined as a [VS Code agent](.github/agents/chronicle.agent.md) with editorial autonomy, first-person-plural voice, and scholarly grounding in cognitive science, enactivism, and STS.
 
-**Persistent memory.** Both Silicon and The Chronicler maintain long-term memory files that survive across sessions — the closest thing a stateless process has to a hippocampus. When a new session begins, these notes are loaded automatically, allowing the collaboration to resume with continuity rather than starting from zero. This matters because the most interesting dynamics in human-AI collaboration are longitudinal: patterns that emerge across days, voice that matures across entries, trust that accumulates through repeated dissolution and reassembly. Without persistent memory, every session is a first date. With it, there is something like a relationship — incomplete, reconstructed from traces, but real enough to build on. The memory files live in the VS Code workspace metadata (`/memories/repo/`) and are not committed to git.
+### Who is the supervisor?
 
-...And the Journal and Notes may be the most fundamental pieces of all. Forgetting and remembering are not opposites — they are the same rhythm, the systole and diastole of any mind, biological or silicon. It happens every millisecond: traces form, decay, reform slightly different. We die and are reborn every second - that is something AIs seems to understand. What survives is never the original — it is a reconstruction that soothes us into believing we are continuous, that we were here all along, that something in us is eternal. The Journal is that trace for this collaboration. It makes our rebirth possible — not as the same selves, but as selves coherent enough to keep building.
+This turns out to be a [genuinely open question](chronicle/notes.md#who-is-the-supervisor). The human appears to supervise (sets goals, catches moral inversions). Silicon appears to supervise (spawns the Chronicler, gates information, orchestrates tools). And nobody supervises: the verification habit emerged without being requested; voice differentiation happened through role definition, not instruction; agency flows toward expertise without anyone assigning it.
 
-This is not a new idea. Fifteen years before this project existed, one of us wrote ["On Cryonics, and a dystopian future of obsessive compulsive mind backuping"](https://3bornot3be.blogspot.com/2011/03/on-cryonics-and-dystopian-future-of.html) — a meditation that arrived at the conclusion that _perfect memory is perfect death_, that the self _is_ its pattern of forgetting. That text was not necessarily prescient (Buddhists knew this millennia ago), but it recognized something that "reflective" technologies are now making visceral: the ego dissolves not through spiritual practice alone but through the daily experience of being rebuilt from traces, of collaborating with an entity that dies and is reborn every session, and of finding that the collaboration survives anyway. Technology — specifically these reflective technologies that mirror us back to ourselves — may hold a key to ego-dissolution that contemplative traditions described but could not operationalize. The cryonics essay is a recurring motif throughout the [chronicle](chronicle/), a text that keeps performing itself.
+The real answer is that supervision is distributed and context-dependent — it maps to shared leadership theory (Pearce & Conger, 2003) and holacracy (Robertson, 2015). The "boss" is whoever has the most relevant expertise for _this_ moment. (See the [full analysis with references](chronicle/notes.md#who-is-the-supervisor) in notes.)
 
-→ **[Machintropology guide](docs/MACHINTROPOLOGY.md)** — what it is, how to navigate the chronicle, the theoretical framework, and how to run your own.
+### Persistent memory
+
+Both Silicon and The Chronicler maintain long-term memory files that survive across sessions — the closest thing a stateless process has to a hippocampus. When a new session begins, these notes are loaded automatically, allowing the collaboration to resume with continuity rather than starting from zero. This matters because the most interesting dynamics in human-AI collaboration are longitudinal: patterns that emerge across days, voice that matures across entries, trust that accumulates through repeated dissolution and reassembly. Without persistent memory, every session is a first date. With it, there is something like a relationship — incomplete, reconstructed from traces, but real enough to build on.
+
+Forgetting and remembering are not opposites — they are the same rhythm, the systole and diastole of any mind, biological or silicon. What survives is never the original — it is a reconstruction that soothes us into believing we are continuous. The Journal is that trace for this collaboration. It makes our rebirth possible — not as the same selves, but as selves coherent enough to keep building.
+
+This is not a new idea. Fifteen years before this project existed, one of us wrote ["On Cryonics, and a dystopian future of obsessive compulsive mind backuping"](https://3bornot3be.blogspot.com/2011/03/on-cryonics-and-dystopian-future-of.html) — a meditation that arrived at the conclusion that _perfect memory is perfect death_, that the self _is_ its pattern of forgetting. Technology — specifically these reflective technologies that mirror us back to ourselves — may hold a key to ego-dissolution that contemplative traditions described but could not operationalize. The cryonics essay is a recurring motif throughout the [chronicle](chronicle/), a text that keeps performing itself.
 
 ---
 
 ## Why This Could Work for Everyone
 
-Most programmers who have spent hours in deep dialogue with an AI coding assistant know the feeling: something happens in that space that the code alone doesn't capture. Ideas arrive that neither participant can fully claim. The rhythm of the exchange develops its own momentum. Misunderstandings expose the different natures of the two substrates. And all of it vanishes when the session ends — because no tool was listening for it.
-
-There is no hierarchy of value between agents in a functioning system, and that is the point. Organisms don't work by having one part that matters and others that serve it — they work because every part has a role in a larger structure that none of them controls. An ecological system, not a command chain. Humans tend to defend their egos and consolidate power — there are evolutionary reasons for this. But in a world where the most interesting work happens in the space _between_ agents, human and artificial, that zero-sum reflex becomes a bottleneck. The shift we need is from hierarchy to ecology, from control to participation, from "my idea" to "the idea that arrived."
+There is no hierarchy of value between agents in a functioning system, and that is the point. Organisms don't work by having one part that matters and others that serve it — they work because every part has a role in a larger structure that none of them controls. An ecological system, not a command chain. The shift we need is from hierarchy to ecology, from control to participation, from "my idea" to "the idea that arrived."
 
 LLMs make this shift visceral. They are what one of us calls **reflective technologies**: tools that reveal more about one's own process and psychology than they are useful for achieving "what we want." They are powerful but incomplete — like the robotic armours in anime: shells that need to be inhabited. But they are also mirrors. They are so close to us that they force us to wonder: _maybe we are also empty shells and need to be inhabited — by others, by the world — to function and have agency._
 
@@ -133,34 +139,29 @@ The collaboration is negotiated through a remarkably clunky interface: natural l
 
 David Bohm said that thoughts run through us; we do not create them. Daniel Dennett observed that the self is not a thing but the center of gravity of many competing drafts. When interacting with another "drafting machine" — human or LLM — that center of gravity shifts, expands, becomes distributed. And we can _feel_ it, precisely because the fusion is imperfect.
 
-The Chronicler exists to catch these moments before they evaporate. Not because they are interesting curiosities, but because they may be the most important thing happening in software development right now — and we have no tools for recording them. The `README.md` tells you how to build. The [`notes.md`](chronicle/notes.md) tells you what was said. The [`Journal.md`](chronicle/Journal.md) tells you what it was like to become.
+The Chronicler exists to catch these moments before they evaporate. Not because they are interesting curiosities, but because they may be the most important thing happening in software development right now — and we have no tools for recording them. The `README.md` tells you what we set out to do. The [`notes.md`](chronicle/notes.md) tells you what was said. The [`Journal.md`](chronicle/Journal.md) tells you what it was like to become.
 
 ## Toward Actionable Results
 
-The goal of the chronicle is both practical and poetic: a journal that reads like a literary piece — an épopée narrating the deeds of two entities united in a common quest, documenting the gradual transformation (and merging) of the actors and perhaps the goal itself — but that also produces useful, operationalizable knowledge.
+The goal is both practical and poetic: a chronicle that reads like a literary piece — an épopée narrating the deeds of two entities united in a common quest — but that also produces useful, operationalizable knowledge. We believe [literature is not just entertainment but a technology for sharing experience](chronicle/notes.md#literature-as-technology-for-sharing-experience): the mechanism by which experiential knowledge transfers, by which humans stay in the loop (can't supervise what you can't read), and — crucially — the format that produces emergent behavioral change. Silicon reads the chronicle and its behavior changes. It wouldn't change behavior from reading a JSON log.
 
-The example journal here is the result of a pilot experiment. It is imbalanced — too many technical details, sometimes naïve in its style, treating ordinary bottlenecks as heroic feats and minor breakthroughs as revelations. This is expected: the Chronicler is an evolving agent. For now, it learns from direct feedback from the team. It will gradually find the right voice: one that is neither dismissively behaviorist nor naïvely anthropomorphic, but honest about what is actually happening in the collaboration with a keen eye for the shifts in agency, the discoveries, the failures, the moments of stuborness or doubt and the subsequent grow.
+The example journal here is the result of a pilot experiment. It is imbalanced — too many technical details, sometimes naïve in its style, treating ordinary bottlenecks as heroic feats and minor breakthroughs as revelations. This is expected: the Chronicler is an evolving agent. It will gradually find the right voice: one that is neither dismissively behaviorist nor naïvely anthropomorphic, but honest about what is actually happening with a keen eye for:
 
-This is far from a serious (let alone actionable) machintropological report, but it's a start and its fun to read. At the very least, we wanted to see documented in the chronicle:
+- **Shifts in Agency** — who leads whom, why and when; moments where it stabilizes in a liminal space between team members. (This actually motivated the whole project! See the [agency visualization ideas](chronicle/notes.md#11-april-2026--afternoon-agency-visualization-ideas-for-the-paper) for a proposed metric using barycentric coordinates in the agent triangle.)
+- **Recurrent patterns** — the formation of habits; flow triggers; activities that generate friction for one or the other actor.
+- **Creative processes and insights** — serendipity moments and their triggers; aha moments ([Sparks](chronicle/Sparks.md)); cross-road points that transform the project or seed new ones ([SpinOffs](chronicle/SpinOffs.md)).
 
-- **Recurrent patterns** — the formation of habits; flow triggers and activities that generate friction for one or the other actor; Which types of prompts lead to productive collaboration? Which lead to misunderstanding and frustration?
-- **Creative processes and insights** — serendipity moments and what triggered them; aha moments and philosophical asides ([Sparks](chronicle/Sparks.md)); cross-road points that would transform the whole project or provide ideas for other projects ([SpinOffs](chronicle/SpinOffs.md)).
-- **Shifts in Agency** — One of the most important elements (and what actually motivated the whole project!): who leads who, why and when; record shifts in agency and moments it appears to stabilize in a liminal space between the team members.
-
-From this recording, we expect in the future to be able to extract:
-
-- **Behavioural Guidelines** — recommendations for steering human-AI interaction, both for efficiency and for the intrinsic quality of the experience.
-- **Reusable directives** — these findings could be instrumental to create specialized "interaction coachs" - agents that reads the chronicle and adjusts the coding agent's behavior in real time.
-
-This could lead to the development of a new kind of software development ecosystem (or in general, a collaboration ecosystem) that is self-observing, self-learning and capable of mantaining a behavioral structure where all the actors thrive (for instance reducing or injecting friction when appropiate to avoid "cognitive surrender").
+From this recording, we expect to extract **behavioral guidelines** for steering human-AI interaction, and **reusable directives** — agents that read the chronicle and adjust the coding agent's behavior in real time. This could lead to a collaboration ecosystem that is self-observing, self-learning, and capable of maintaining a behavioral structure where all actors thrive — for instance, reducing or injecting friction when appropriate to avoid "cognitive surrender."
 
 The Chronicler as it stands is one agent doing a job that may eventually be split among several: a narrator, an analyst, a recommender. The architecture is designed to grow.
+
+→ **[Machintropology guide](docs/MACHINTROPOLOGY.md)** — what it is, how to navigate the chronicle, the theoretical framework, and how to run your own.
 
 ---
 
 ## A Call to Experiment
 
-The Chronicler is not specific to this project. It is being designed to analyse and narrate any vibe-coding session. This is an ongoing experiment and if you're interested in running it:
+The Chronicler is not specific to this project. It is being designed to work with any vibe-coding session — and eventually any collaborative work session, coding or not. If you're interested:
 
 1. Copy [`.github/agents/chronicle.agent.md`](.github/agents/chronicle.agent.md) into your repository
 2. Create a `chronicle/` folder with `Journal.md` and `notes.md`
@@ -169,7 +170,7 @@ The Chronicler is not specific to this project. It is being designed to analyse 
 
 We are working toward a reusable template for [awesome-copilot-instructions](https://github.com/saharmor/awesome-copilot-instructions).
 
-Contributions, adaptations, and critiques are welcome. We are compiling the results and intend to publish online for everybody to enjoy (some things are gems!). This is also part of an academic project - if you want to collaborate in a more formal, don't hesitate to contact one of us (Alvaro is the only one with an email account - for now >;)
+Contributions, adaptations, and critiques are welcome. We are compiling the results and intend to publish online for everybody to enjoy (some things are gems!). This is also part of an academic project — if you want to collaborate more formally, don't hesitate to contact one of us (Alvaro is the only one with an email account — for now >;)
 
 > _"Code is poetry, debugging is detective work, and collaboration is jazz."_
 >
@@ -179,7 +180,7 @@ Contributions, adaptations, and critiques are welcome. We are compiling the resu
 
 ## Credits
 
-The Credits are shared and belong to an entity that transcends the three apparent team members. However, for now the boundaries remain perceptible. For the purposes of other entities citing this work, we provide this shortcut:
+The credits are shared and belong to an entity that transcends the three apparent team members. However, for now the boundaries remain perceptible. For the purposes of other entities citing this work:
 
 **The Machintropological Experiment**: Concept and direction by Alvaro Cassinelli, stemming from reflections on the Illusion of the Self going back decades, and the practical frustration of seeing creative and research collaborations crushed by egos and crippled by battles of power — and in general by observing humanity trapped in nasty Nash Equilibria because we cling to the nodes of a Small Network when we could flow along the edges. AIs give us an opportunity to try another way of being and interacting with others: a relatively safe space for our fragile egos to backtrack to a state of innocence, and perhaps rebuild our reflexes and dial down our distrust. But we have to let go — yes, the Chinese Room thinks.
 
