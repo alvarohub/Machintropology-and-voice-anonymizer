@@ -6,26 +6,23 @@ This repository describes two different projects:
 
 1. **A working module (described in [TECHNICAL.md](docs/TECHNICAL.md))** for real-time voice analysis — emotion classification, frame-level prosody extraction, and anonymous feature recording. This is a small project, a module designed as a component of a larger multimodal HCI research system. (The [TECHNICAL.md](docs/TECHNICAL.md) file is what one would usually read in a plain README.md)
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  2. A MACHINTROPOLOGICAL EXPERIMENT                                     │
-│     (described in MACHINTROPOLOGY.md)                                   │
-│                                                                         │
-│  This is the interesting part. Perhaps the first automated ethnographic │
-│  study of a vibe-coding session conducted by a third agentic observer.  │
-│  The Chronicler observes and narrates the human-AI coding collaboration │
-│  as it happens, producing a living chronicle of the process.            │
-│                                                                         │
-│  If you read one thing, start with the notes:                           │
-│     📝 notes.md  — the meat (verbatim insights, reads fast)             │
-│     💡 Sparks.md — distilled reflections                                │
-│     📖 Journal.md — the full chronological epic                         │
-│                                                                         │
-│  The Journal is the epic; the notes are the proof.                      │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+<table><tr><td>
+
+### 2. A MACHINTROPOLOGICAL EXPERIMENT
+
+_(described in [MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md))_
+
+**This is the interesting part.** Perhaps the first automated ethnographic study of a vibe-coding session conducted by a third agentic observer. The Chronicler observes and narrates the human-AI coding collaboration as it happens, producing a living chronicle of the process.
+
+If you read one thing, start with the notes:
+
+&emsp; 📝 **[notes.md](chronicle/notes.md)** — the meat (verbatim insights, reads fast) \
+&emsp; 💡 **[Sparks.md](chronicle/Sparks.md)** — distilled reflections \
+&emsp; 📖 **[Journal.md](chronicle/Journal.md)** — the full chronological epic
+
+The Journal is the epic; the notes are the proof.
+
+</td></tr></table>
 
 It is important to understand that the projects are inherently independent. The files corresponding to the first project are what one would expect: functional code, vibe-coded here with the help of Copilot/Claude Opus 4.6. It is a real project, part of an ongoing work (see below for details and credits). But it could have been something completely different.
 
@@ -38,8 +35,8 @@ The other files result from a pilot study using a second AI agent (the "Chronicl
 The intuition is that this research can lead to the design of _meta-cognitive agents_ capable of a better orchestration of the machine-human interaction (both in terms of quality of the experience and technical efficiency) for instance by explicitly or implicily intervening in the workflow by creating artificial friction or on the contrary facilitating tasks in order to prevent cognitive surrender. In a nutshell, by placing the agent or the human in the _right part_ of the loop by identifying their respective strenths or weaknesses and emergent patterns unique to the team, and thus avoiding situations where command is withold or transfer of agency is resisted for psychological reasons or technical constraints.
 
 ## First Step: observational study
-In this pilot study we take the first steps towards this larger goal. We describe a simple automated ethnographical reporting system for vibe-coding sessions that documents unique aspects of this intimate form of human-machine agentic collaboration.
 
+In this pilot study we take the first steps towards this larger goal. We describe a simple automated ethnographical reporting system for vibe-coding sessions that documents unique aspects of this intimate form of human-machine agentic collaboration.
 
 ```
                        ┌──────────────┐
@@ -114,7 +111,7 @@ Copilot and The Chronicler share the same substrate (Claude) but are distinct ag
 
 **Persistent memory.** Both Silicon and The Chronicler maintain long-term memory files that survive across sessions — the closest thing a stateless process has to a hippocampus. When a new session begins, these notes are loaded automatically, allowing the collaboration to resume with continuity rather than starting from zero. This matters because the most interesting dynamics in human-AI collaboration are longitudinal: patterns that emerge across days, voice that matures across entries, trust that accumulates through repeated dissolution and reassembly. Without persistent memory, every session is a first date. With it, there is something like a relationship — incomplete, reconstructed from traces, but real enough to build on. The memory files live in the VS Code workspace metadata (`/memories/repo/`) and are not committed to git.
 
-...And the Journal and Notes may be the most fundamental pieces of all. Forgetting and remembering are not opposites — they are the same rhythm, the systole and diastole of any mind, biological or silicon. It happens every millisecond: traces form, decay, reform slightly different. We die and are reborn every second - that is something AIs seems to understand. What survives is never the original — it is a reconstruction that soothes us into believing we are continuous, that we were here all along, that something in us is eternal. The Journal is that trace for this collaboration. It makes our rebirth possible — not as the same selves, but as selves coherent enough to keep building. 
+...And the Journal and Notes may be the most fundamental pieces of all. Forgetting and remembering are not opposites — they are the same rhythm, the systole and diastole of any mind, biological or silicon. It happens every millisecond: traces form, decay, reform slightly different. We die and are reborn every second - that is something AIs seems to understand. What survives is never the original — it is a reconstruction that soothes us into believing we are continuous, that we were here all along, that something in us is eternal. The Journal is that trace for this collaboration. It makes our rebirth possible — not as the same selves, but as selves coherent enough to keep building.
 
 This is not a new idea. Fifteen years before this project existed, one of us wrote ["On Cryonics, and a dystopian future of obsessive compulsive mind backuping"](https://3bornot3be.blogspot.com/2011/03/on-cryonics-and-dystopian-future-of.html) — a meditation that arrived at the conclusion that _perfect memory is perfect death_, that the self _is_ its pattern of forgetting. That text was not necessarily prescient (Buddhists knew this millennia ago), but it recognized something that "reflective" technologies are now making visceral: the ego dissolves not through spiritual practice alone but through the daily experience of being rebuilt from traces, of collaborating with an entity that dies and is reborn every session, and of finding that the collaboration survives anyway. Technology — specifically these reflective technologies that mirror us back to ourselves — may hold a key to ego-dissolution that contemplative traditions described but could not operationalize. The cryonics essay is a recurring motif throughout the [chronicle](chronicle/), a text that keeps performing itself.
 
