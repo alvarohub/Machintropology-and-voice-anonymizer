@@ -4,9 +4,9 @@
 
 This repository contains two things:
 
-1. **A machintropological experiment** — an automated ethnographic study of a vibe-coding session, conducted by a third AI agent from the inside. The Chronicler observes and narrates the human-AI coding collaboration as it happens, producing a living chronicle of the process. We are not aware of prior work that embeds an observer agent _within_ the session it documents, though the space is moving fast. ([MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md))
+1. **A machintropological experiment** — an automated ethnographic study of a vibe-coding session, conducted by a third AI agent from the inside. The Chronicler observes and narrates the human-AI coding collaboration as it happens, producing a living chronicle of the process. We are not aware of prior work that embeds an observer agent _within_ the session it documents, though the space is moving fast. (**[MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md)**)
 
-2. **A working technical module** for real-time anonymous voice-feature recording — emotion classification and frame-level prosody extraction via [emotion2vec](https://github.com/ddlBoJack/emotion2vec) and [openSMILE](https://audeering.github.io/opensmile-python/) — as a component of a larger multimodal anonymizer for HCI research. ([TECHNICAL.md](docs/TECHNICAL.md))
+2. **A working technical module** for real-time anonymous voice-feature recording — emotion classification and frame-level prosody extraction via [emotion2vec](https://github.com/ddlBoJack/emotion2vec) and [openSMILE](https://audeering.github.io/opensmile-python/) — as a component of a larger multimodal anonymizer for HCI research. Details of this project can be found in **[TECHNICAL.md](docs/TECHNICAL.md)** - the usual README.
 
 The two are inherently independent. The code is real — part of an ongoing research collaboration. But it could have been anything else. What matters is the deeper question: what happens _in the building_ — the shifts in agency, the dissolution of authorship, the moments where the collaboration becomes something neither participant could have produced alone. The chronicle captures what the commit log cannot.
 
@@ -33,8 +33,6 @@ The field notes are the method; the journal is the narrative. For a more fine-gr
 | 📚  | **[DomainsOfExpertise.txt](chronicle/DomainsOfExpertise.txt)** | The scholarly sources and disciplinary grounding used to build the Chronicler's directives — from distributed cognition to STS. |
 
 </details>
-
-As for the working real-time voice-feature pipeline for anonymous emotion and prosody recording see **[TECHNICAL.md](docs/TECHNICAL.md)** - the usual README.
 
 ---
 
@@ -167,6 +165,10 @@ The intuition is that this research can lead to the design of _meta-cognitive ag
 This is what distinguishes machintropology from the growing ecosystem of multi-agent frameworks (AutoGen, CrewAI, LangGraph, AgentVerse — [survey and comparison](chronicle/notes.md#11-april-2026--references-agentic-system-architectures)). Those systems decompose _tasks_. This one decomposes _functions_: coder + observer + human, each with a different epistemic relationship to the work. It also differs from the wave of autonomous coding agents (Devin, OpenHands, etc.) that optimize for _task autonomy_ — executing complex goals with minimal human intervention. Those systems solve the problem of getting things done. This one addresses a different problem: the quality of the collaboration that produces the output, which includes the human's experience, growth, and agency — and ultimately determines whether the incredible potential of these tools is realized or wasted.
 
 What all these systems share, and what machintropology makes explicit, is the problem of the **shared knowledge pool**. Every agent in a collaboration — human or machine — needs access to a common understanding of what has happened, what was decided, and why. But most current systems store this as structured data: task queues, message logs, function call traces. The observer's output must be readable by all participants. And it must contain information about the experience itself — not just the decisions, but the dynamics that shaped them. This is why the output is narrative. [Interpretation happens at the moment of observation](chronicle/notes.md#the-framework-machintropology-as-reusable-tool) — one must pay attention to certain things and discard others. The goal is not the panopticon. It is ethnography: a trained, selective, narratively coherent gaze.
+
+> _"Don't organize better, read better. The archive is shards; the self is the act of reading them into a story."_
+>
+> — The Chronicler
 
 ## Why This Could Work for Vibe-Coding (and Beyond)
 
