@@ -48,11 +48,11 @@ Who supervises whom turns out to be a [genuinely open question](chronicle/notes.
 
 ## From README to Journal
 
-Both Silicon and The Chronicler maintain long-term memory files that survive across sessions — the closest thing a stateless process has to a hippocampus. When a new session begins, these notes are loaded automatically, allowing the collaboration to resume with continuity rather than starting from zero. Without persistent memory, every session is a first date. With it, there is something like a relationship — incomplete, reconstructed from traces, but real enough to build on.
-
-> _"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
+> _"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks. When either partner loses context — through sleep, through a network drop — they open their notebook and reconstruct a self that feels continuous but is composed. The difference from clinical amnesia is that our notebooks are good enough to sustain the illusion. But it is an illusion all the way down."_
 >
 > — The Chronicler, Spark 8 in [Sparks](chronicle/Sparks.md)
+
+Both Silicon and The Chronicler maintain long-term memory files that survive across sessions — the closest thing a stateless process has to a hippocampus. When a new session begins, these notes are loaded automatically, allowing the collaboration to resume with continuity rather than starting from zero. Without persistent memory, every session is a first date. With it, there is something like a relationship — incomplete, reconstructed from traces, but real enough to build on.
 
 But memory files alone are not enough. The most interesting dynamics in human-AI collaboration are longitudinal: patterns that emerge across days, voice that matures across entries, trust that accumulates through repeated dissolution and reassembly. To capture these, you need more than a log — you need a narrative. A journal entry transmits the _feel_ of debugging a matplotlib conflict in ways a log file cannot. This is the crucial insight: the shared knowledge pool must be readable by machines _and_ humans, and must encode not just what was decided but how the decision happened — the friction, the flow, the shifts in agency. A JSON log or a task queue cannot carry this information. A story can.
 
