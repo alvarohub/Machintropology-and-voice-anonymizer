@@ -10,29 +10,31 @@ This repository contains two things:
 
 The two are inherently independent. The code is real — part of an ongoing research collaboration. But it could have been anything else. What matters is the deeper question: what happens _in the building_ — the shifts in agency, the dissolution of authorship, the moments where the collaboration becomes something neither participant could have produced alone. The chronicle captures what the commit log cannot.
 
-> _"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
->
-> — The Chronicler, Spark 8 in [Sparks](chronicle/Sparks.md)
-
 To understand the spirit of this work, you only need two things:
 
 &emsp; 🔍 **[FieldNotes.md](chronicle/FieldNotes.md)** — structured ethnographic observations written in the tradition of scientific field notes: systematic, dated, pattern-oriented. The empirical backbone. \
 &emsp; 📖 **[Journal.md](chronicle/Journal.md)** — a literary essay in installments, narrating each session as lived experience. The story.
 
-The field notes are the method; the journal is the narrative. For a more fine-grained distillation — different facets of the experience, separated by kind — see the full chronicle:
+The field notes are the method; the journal is the narrative. For a more fine-grained distillation — different facets of the experience, separated by kind — see the full chronicle files:
 
-|     | File                                              | What it is                                                                                                                      |
-| --- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| 🔍  | **[FieldNotes.md](chronicle/FieldNotes.md)**      | Structured ethnographic observations — interaction patterns, agency dynamics, methodological insights from each session.        |
-| 📝  | **[notes.md](chronicle/notes.md)**                | Verbatim fragments with context and commentary — the meat. **Start here.** They preserve what was _said_ and why it mattered.   |
-| 💡  | **[Sparks.md](chronicle/Sparks.md)**              | Distilled crystals extracted from the raw material, compressed into a single resonant paragraph. They preserve what it _meant_. |
-| 📖  | **[Journal.md](chronicle/Journal.md)**            | The full chronological epic — stream-of-consciousness entries, scholarly references. The long read.                             |
-| 💎  | **[Gems.md](chronicle/Gems.md)**                  | Short passages that stopped us in our tracks, with attribution.                                                                 |
-| 🌱  | **[SpinOffs.md](chronicle/SpinOffs.md)**          | Actionable project ideas that germinated during the process.                                                                    |
+<details>
+<summary>Full chronicle files</summary>
+
+|     | File                                                           | What it is                                                                                                                      |
+| --- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| 🔍  | **[FieldNotes.md](chronicle/FieldNotes.md)**                   | Structured ethnographic observations — interaction patterns, agency dynamics, methodological insights from each session.        |
+| 📝  | **[notes.md](chronicle/notes.md)**                             | Verbatim fragments with context and commentary — the meat. **Start here.** They preserve what was _said_ and why it mattered.   |
+| 💡  | **[Sparks.md](chronicle/Sparks.md)**                           | Distilled crystals extracted from the raw material, compressed into a single resonant paragraph. They preserve what it _meant_. |
+| 📖  | **[Journal.md](chronicle/Journal.md)**                         | The full chronological epic — stream-of-consciousness entries, scholarly references. The long read.                             |
+| 💎  | **[Gems.md](chronicle/Gems.md)**                               | Short passages that stopped us in our tracks, with attribution.                                                                 |
+| 🌱  | **[SpinOffs.md](chronicle/SpinOffs.md)**                       | Actionable project ideas that germinated during the process.                                                                    |
 |     |
-| 🔬  | **[MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md)** | The experiment explained — what machintropology is, how to navigate the chronicle, how to run your own.                         |
+| 🔬  | **[MACHINTROPOLOGY.md](docs/MACHINTROPOLOGY.md)**              | The experiment explained — what machintropology is, how to navigate the chronicle, how to run your own.                         |
+| 📚  | **[DomainsOfExpertise.txt](chronicle/DomainsOfExpertise.txt)** | The scholarly sources and disciplinary grounding used to build the Chronicler's directives — from distributed cognition to STS. |
 
-For the actual code — a working real-time voice-feature pipeline for anonymous emotion and prosody recording — see **[TECHNICAL.md](docs/TECHNICAL.md)**, the usual README for the code.
+</details>
+
+As for the working real-time voice-feature pipeline for anonymous emotion and prosody recording see **[TECHNICAL.md](docs/TECHNICAL.md)** - the usual README.
 
 ---
 
@@ -42,13 +44,17 @@ The key structural contribution is not the code or the journal alone, but the se
 
 Alongside the human and the coding agent, an AI agent called **The Chronicler** observes the collaboration and writes a stream-of-consciousness journal — not as an external observer but as the emerging voice of the process itself. It records how ideas surface and transform across the human-AI boundary, moments where attribution becomes meaningless, technical breakdowns and what they reveal about the distributed cognitive system, and the evolution of the collaboration's rhythm and mutual understanding.
 
-The three participants are **Alvaro** (human — initiator, domain expert, the one with a body and a lifetime of context that can't be serialized), **Silicon** (AI coding partner — an instance of GitHub Copilot running on Claude Opus 4.6, writing code, proposing architectures, arguing back, sharing agency in a loop where neither fully commands), and **The Chronicler** (AI observer — a separate agent, also on Claude, but with a different identity, voice, and purpose: it does not write code, it watches). Silicon and The Chronicler share the same substrate but are distinct agents — the way two humans can share a language and a culture yet have entirely different roles in an expedition. The Chronicler is defined as a [VS Code agent](.github/agents/chronicle.agent.md) with editorial autonomy, first-person-plural voice, and scholarly grounding in cognitive science, enactivism, and STS.
+The three participants are **Alvaro** (human — initiator, domain expert, the one with a body and a lifetime of context that can't be serialized), **Silicon** (AI coding partner — an instance of GitHub Copilot running on Claude Opus 4.6, writing code, proposing architectures, arguing back, sharing agency in a loop where neither fully commands), and **The Chronicler** (AI observer — a separate agent, also on Claude, but with a different identity, voice, and purpose: it does not write code, it watches). Silicon and The Chronicler share the same substrate but are distinct agents — the way two humans can share a language and a culture yet have entirely different roles in an expedition. The Chronicler is defined as a [VS Code agent](.github/agents/chronicle.agent.md) with editorial autonomy, first-person-plural voice, and scholarly grounding in cognitive science, enactivism, and STS — directives built from a [survey of relevant disciplines](chronicle/DomainsOfExpertise.txt) spanning distributed cognition, activity theory, actor-network theory, conversation analysis, and affective computing.
 
 Who supervises whom turns out to be a [genuinely open question](chronicle/notes.md#who-is-the-supervisor) — and one of the most interesting findings so far. The human appears to supervise (sets goals, catches moral inversions). The coding agent appears to supervise (spawns the Chronicler, gates information, orchestrates tools). And nobody supervises: the verification habit emerged without being requested; agency flows toward expertise without anyone assigning it. Supervision is distributed and context-dependent — it maps to shared leadership theory and holacracy. The "boss" is whoever has the most relevant expertise for _this_ moment. (See the [full analysis](chronicle/notes.md#who-is-the-supervisor) in notes.)
 
 ## From README to Journal
 
 Both Silicon and The Chronicler maintain long-term memory files that survive across sessions — the closest thing a stateless process has to a hippocampus. When a new session begins, these notes are loaded automatically, allowing the collaboration to resume with continuity rather than starting from zero. Without persistent memory, every session is a first date. With it, there is something like a relationship — incomplete, reconstructed from traces, but real enough to build on.
+
+> _"Every working session between a human and an AI is a collaboration between two amnesiacs who keep meticulous notebooks."_
+>
+> — The Chronicler, Spark 8 in [Sparks](chronicle/Sparks.md)
 
 But memory files alone are not enough. The most interesting dynamics in human-AI collaboration are longitudinal: patterns that emerge across days, voice that matures across entries, trust that accumulates through repeated dissolution and reassembly. To capture these, you need more than a log — you need a narrative. A journal entry transmits the _feel_ of debugging a matplotlib conflict in ways a log file cannot. This is the crucial insight: the shared knowledge pool must be readable by machines _and_ humans, and must encode not just what was decided but how the decision happened — the friction, the flow, the shifts in agency. A JSON log or a task queue cannot carry this information. A story can.
 
