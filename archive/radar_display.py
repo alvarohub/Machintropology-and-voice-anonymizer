@@ -46,7 +46,7 @@ from matplotlib.widgets import Slider, Button
 from matplotlib.patches import FancyBboxPatch
 
 # Import display config from prosody module
-from prosody import (
+from src.prosody import (
     DISPLAY_KEYS, DISPLAY_LABELS, DISPLAY_COLORS, DISPLAY_YLIMS,
     LLD_DISPLAY_KEYS, LLD_DISPLAY_LABELS, LLD_DISPLAY_COLORS, LLD_DISPLAY_YLIMS,
     LLD_DISPLAY_UNITS, NZ_KEYS,

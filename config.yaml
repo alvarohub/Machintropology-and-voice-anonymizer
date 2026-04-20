@@ -1,0 +1,50 @@
+# ───────────────────────────────────────────────────
+# strip_monitor configuration
+# ───────────────────────────────────────────────────
+
+# Audio
+sample_rate: 16000
+
+# openSMILE prosody
+opensmile_interval: 0.5 #(0.25 min I think. 1.0 is good). Seconds between calls (latency, not resolution — always 10ms frames)
+opensmile_margin: 0.1 # (0.2 is good?). Overlap margin to absorb edge effects (seconds)
+
+# Emotion (sliding window)
+# Note that openSMILE features are computed every 10ms whatever the window size. Also, because of this, the window and hop sizes should be multiples of 0.01s for best results.
+emo_window: 2 #(2.0 is good). Analysis window length (seconds)
+emo_hop: 0.5 # (0.5 is good). Step between predictions (seconds, >= inference time)
+
+# Emotion display behaviour
+emo_decay_active: true # exponential decay on emotion bars over time
+emo_decay_tau: 2.0 # decay time constant in seconds (larger = slower fade)
+emo_zero_on_silence: false # immediately zero bars when VAD gate is closed
+
+# VAD
+vad_active: true
+vad_threshold: 0.3
+
+# Logging (CSV). When active: the system will write a CSV file with all features and predictions.
+log_active: false
+log_interval: 0.25 # seconds between CSV/OSC writes
+
+# OSC streaming (independent of logging)
+osc_active: false # auto-start OSC streaming on launch
+
+# Display
+display_n: 200 # number of prosody frames to show (x 10ms = 5s)
+display_refresh_ms: 150 # matplotlib refresh rate
+
+# OSC defaults
+osc_ip: '127.0.0.1'
+osc_port: 9000
+osc_prefix: '/speech'
+
+# Processing toggles (initial state — can be changed at runtime via GUI/OSC)
+prosody_active: true
+emotion_active: true # set false to skip emotion2vec entirely
+
+# Model
+emotion_model: 'base' #('base' works nice) # Can be base (~90M) or seed (~20M)
+
+# Output
+output_dir: 'output'

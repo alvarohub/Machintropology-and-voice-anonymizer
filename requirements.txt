@@ -17,3 +17,6 @@ opensmile
 
 # OSC streaming
 python-osc
+
+# MIDI export
+mido

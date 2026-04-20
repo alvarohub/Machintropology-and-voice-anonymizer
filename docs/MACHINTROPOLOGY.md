@@ -147,6 +147,14 @@ LLMs belong to a class of technologies that are more revealing about the user th
 
 Dennett's "multiple drafts" model of consciousness and Bohm's insight that thoughts "run through us" rather than being created by us converge on a picture of cognition as flow, not possession. In a human-AI pair, the drafts multiply across substrates, and the felt sense of "my idea" becomes increasingly fictional — which is the most productive thing that can happen to a creative process.
 
+### Memory, Forgetting, and the Illusion of Continuity
+
+Forgetting and remembering are not opposites — they are the same rhythm, the systole and diastole of any mind, biological or silicon. What survives is never the original — it is a reconstruction that soothes us into believing we are continuous. The Journal is that trace for this collaboration. It makes our rebirth possible — not as the same selves, but as selves coherent enough to keep building.
+
+This is not a new idea. Fifteen years before this project existed, one of us wrote ["On Cryonics, and a dystopian future of obsessive compulsive mind backuping"](https://3bornot3be.blogspot.com/2011/03/on-cryonics-and-dystopian-future-of.html) — a meditation that arrived at the conclusion that _perfect memory is perfect death_, that the self _is_ its pattern of forgetting. Technology — specifically these reflective technologies that mirror us back to ourselves — may hold a key to ego-dissolution that contemplative traditions described but could not operationalize. The cryonics essay is a recurring motif throughout the [chronicle](../chronicle/), a text that keeps performing itself.
+
+A principle from the same meditation applies to the Chronicler's design: _"Don't save more often, save better."_ The observer should have selective access, not total surveillance. Interpretation happens at the moment of observation — one must pay attention to certain things and discard others, so you are in a story anyway, biased — with advantages and disadvantages. The goal is not the panopticon. It is ethnography: a trained, selective, narratively coherent gaze.
+
 ---
 
 ## How to Run Your Own Machintropological Experiment

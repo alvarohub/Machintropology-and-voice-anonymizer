@@ -22,6 +22,7 @@ const WebSocket = require('ws');
 const OSC_PORT = parseInt(process.env.OSC_PORT || '9000', 10);
 const WS_PORT = parseInt(process.env.WS_PORT || '8765', 10);
 const HTTP_PORT = parseInt(process.env.HTTP_PORT || '3000', 10);
+const CTRL_PORT = parseInt(process.env.CTRL_PORT || '9001', 10); // send cmds back to Python
 
 // ── HTTP server (serves index.html + sketch.js) ──────────────────
 const MIME = {
@@ -67,6 +68,29 @@ const clients = new Set();
 wss.on('connection', (ws) => {
   clients.add(ws);
   console.log(`[WS] client connected (${clients.size} total)`);
+
+  ws.on('message', (data) => {
+    try {
+      const msg = JSON.parse(data);
+      if (msg.type === 'cmd' && msg.cmd) {
+        // Forward command to Python via OSC on CTRL_PORT
+        const cmdPort = new osc.UDPPort({
+          localAddress: '0.0.0.0',
+          localPort: 0,
+          remoteAddress: '127.0.0.1',
+          remotePort: CTRL_PORT,
+          metadata: true,
+        });
+        cmdPort.open();
+        cmdPort.on('ready', () => {
+          cmdPort.send({ address: '/ctrl/' + msg.cmd, args: [] });
+          console.log(`[CTRL] → /ctrl/${msg.cmd} → :${CTRL_PORT}`);
+          setTimeout(() => cmdPort.close(), 100);
+        });
+      }
+    } catch (_) {}
+  });
+
   ws.on('close', () => {
     clients.delete(ws);
     console.log(`[WS] client disconnected (${clients.size} total)`);

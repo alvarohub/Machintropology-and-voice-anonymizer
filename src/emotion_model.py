@@ -144,6 +144,8 @@ class Emotion2VecModel:
             audio,
             granularity="utterance",
             extract_embedding=extract_embedding,
+            disable_pbar=True,
+            disable_log=True,
         )
 
         # funasr returns a list[dict]; take the first entry

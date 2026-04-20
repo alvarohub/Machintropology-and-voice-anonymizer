@@ -28,6 +28,12 @@ import queue
 import threading
 from datetime import datetime
 
+# Add src/ and archive/ to sys.path so old flat imports resolve
+_here = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(_here)
+sys.path.insert(0, os.path.join(_root, "src"))
+sys.path.insert(0, _here)
+
 # ============================================================
 # CONFIGURATION — edit these to taste
 # ============================================================
@@ -214,6 +220,9 @@ def prosody_lld_loop(
                     continue
                 lld["times"] = times[keep]
                 lld["frames"] = {k: v[keep] for k, v in lld["frames"].items()}
+                # Add fields expected by RadarDisplay._ingest_prosody_lld
+                lld["wall_now"] = time.time()
+                lld["audio_dur"] = total_dur
                 # Timestamp reflects the MIDDLE of the interest window
                 # (shifted back by RIGHT_PAD since we're reading older audio)
                 lld["timestamp_ms"] = (time.time() - CONTEXT_PAD) * 1000.0

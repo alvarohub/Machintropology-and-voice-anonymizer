@@ -3,18 +3,20 @@
  *
  * Connects to the Node.js bridge via WebSocket.
  * Displays scrolling strips for prosody features, VAD bar,
- * and a large emotion label.
+ * emotion label + score bars, sample counter, and controls.
  */
 
 // ── Config ───────────────────────────────────────────────────────
 const WS_URL = `ws://${location.hostname || 'localhost'}:8765`;
 const HISTORY = 200; // data points to keep (scrolling window)
-const BAR_H = 12; // height of VAD bar
+const BAR_H = 18; // height of VAD bar (was 12)
 const RECONNECT_MS = 2000;
+const CTRL_H = 70; // height reserved for control panel at bottom (was 50)
 
 // ── State ────────────────────────────────────────────────────────
 let ws = null;
 let connected = false;
+let sampleIndex = 0; // increments on every VAD message
 
 // Prosody channels — keyed by OSC address suffix
 const channels = {
@@ -43,6 +45,10 @@ const EMO_COLORS = {
   unknown: [80, 80, 80],
 };
 
+// Controls state
+let oscRunning = false;
+let logRunning = false;
+
 // ── WebSocket ────────────────────────────────────────────────────
 function wsConnect() {
   ws = new WebSocket(WS_URL);
@@ -65,9 +71,23 @@ function wsConnect() {
   ws.onmessage = (evt) => {
     try {
       const msg = JSON.parse(evt.data);
-      handleOSC(msg.address, msg.args);
+      // OSC data forwarded from bridge
+      if (msg.address) {
+        handleOSC(msg.address, msg.args);
+      }
+      // Control state feedback from bridge
+      if (msg.type === 'state') {
+        if (msg.osc !== undefined) oscRunning = msg.osc;
+        if (msg.log !== undefined) logRunning = msg.log;
+      }
     } catch (_) {}
   };
+}
+
+function sendCmd(cmd) {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ type: 'cmd', cmd }));
+  }
 }
 
 function handleOSC(address, args) {
@@ -77,6 +97,7 @@ function handleOSC(address, args) {
   if (address.endsWith('/vad')) {
     vadHistory.push(args[0] || 0);
     if (vadHistory.length > HISTORY) vadHistory.shift();
+    sampleIndex++;
     return;
   }
 
@@ -105,9 +126,60 @@ function handleOSC(address, args) {
   }
 }
 
+// ── Button helper ────────────────────────────────────────────────
+function drawBtn(x, y, w, h, label, bg, isHover) {
+  let c = isHover ? bg.map((v) => min(255, v + 30)) : bg;
+  fill(c[0], c[1], c[2]);
+  noStroke();
+  rect(x, y, w, h, 5);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text(label, x + w / 2, y + h / 2);
+}
+
+function inRect(mx, my, x, y, w, h) {
+  return mx >= x && mx <= x + w && my >= y && my <= y + h;
+}
+
+// Button layout (computed each frame)
+function btnLayout() {
+  let y = height - CTRL_H + 16;
+  let bw = 130,
+    bh = 38,
+    gap = 14,
+    bx = 135;
+  return [
+    {
+      x: bx,
+      y,
+      w: bw,
+      h: bh,
+      label: oscRunning ? '■ STOP OSC' : '● OSC',
+      bg: oscRunning ? [180, 120, 0] : [60, 60, 80],
+      action: () => {
+        sendCmd(oscRunning ? 'osc_stop' : 'osc_start');
+        oscRunning = !oscRunning;
+      },
+    },
+    {
+      x: bx + bw + gap,
+      y,
+      w: bw,
+      h: bh,
+      label: logRunning ? '■ STOP LOG' : '● LOG',
+      bg: logRunning ? [180, 50, 50] : [60, 60, 80],
+      action: () => {
+        sendCmd(logRunning ? 'log_stop' : 'log_start');
+        logRunning = !logRunning;
+      },
+    },
+  ];
+}
+
 // ── p5.js ────────────────────────────────────────────────────────
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1080, 780);
   textFont('monospace');
   wsConnect();
 }
@@ -116,16 +188,32 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+function mousePressed() {
+  for (let b of btnLayout()) {
+    if (inRect(mouseX, mouseY, b.x, b.y, b.w, b.h)) {
+      b.action();
+      return;
+    }
+  }
+}
+
 function draw() {
   background(26, 26, 46);
 
   const nCh = channelKeys.length;
-  const topMargin = 100; // space for emotion label
-  const botMargin = 30;
-  const stripH = (height - topMargin - botMargin - BAR_H - 10) / nCh;
-  const lm = 90; // left margin for labels
-  const rm = 20; // right margin
+  const topMargin = 195; // extra room for emotion bars (was 130)
+  const botMargin = CTRL_H + 15;
+  const stripH = (height - topMargin - botMargin - BAR_H - 15) / nCh;
+  const lm = 135; // left margin for labels (was 90)
+  const rm = 30; // right margin (was 20)
   const plotW = width - lm - rm;
+
+  // ── Sample counter (top-left) ────────────────────────────────
+  fill(100);
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(13);
+  text(`sample: ${sampleIndex}`, 12, 12);
 
   // ── Emotion label (top center) ───────────────────────────────
   if (emotionLabel) {
@@ -133,15 +221,17 @@ function draw() {
     fill(ec[0], ec[1], ec[2]);
     noStroke();
     textAlign(CENTER, CENTER);
-    textSize(min(40, width / 10));
-    text(emotionLabel.toUpperCase() + '  ' + nf(emotionConf * 100, 0, 0) + '%', width / 2, 35);
+    textSize(min(42, width / 12));
+    text(emotionLabel.toUpperCase() + '  ' + nf(emotionConf * 100, 0, 0) + '%', width / 2, 36);
 
-    // Mini bar chart of all scores
-    let barW = min(30, plotW / EMOTION_DIMS.length - 4);
-    let barMaxH = 30;
-    let bx = width / 2 - (EMOTION_DIMS.length * (barW + 4)) / 2;
-    let by = 60;
-    textSize(7);
+    // Bar chart spanning full width
+    let emoGap = 6;
+    let totalGaps = (EMOTION_DIMS.length - 1) * emoGap;
+    let barW = (plotW - totalGaps) / EMOTION_DIMS.length;
+    let barMaxH = 68;
+    let bx = lm;
+    let by = 70;
+    textSize(11);
     textAlign(CENTER, TOP);
     for (let i = 0; i < EMOTION_DIMS.length; i++) {
       let d = EMOTION_DIMS[i];
@@ -150,30 +240,56 @@ function draw() {
       let h = v * barMaxH;
       fill(c[0], c[1], c[2], 180);
       noStroke();
-      rect(bx, by + barMaxH - h, barW, h, 2);
+      rect(bx, by + barMaxH - h, barW, h, 3);
       fill(150);
-      text(d.substr(0, 3), bx + barW / 2, by + barMaxH + 2);
-      bx += barW + 4;
+      text(d.substr(0, 4), bx + barW / 2, by + barMaxH + 3);
+      bx += barW + emoGap;
     }
   }
 
-  // ── VAD bar ──────────────────────────────────────────────────
+  // ── VAD bar (tri-state: -1 = VAD off, 0 = silent, 1 = speech) ──
   let vadY = topMargin - BAR_H - 6;
   noStroke();
+
+  // Always draw a background so the strip is visible even with no data
+  fill(40, 40, 60);
+  rect(lm, vadY, plotW, BAR_H, 3);
+
+  // Draw VAD history on top
   for (let i = 0; i < vadHistory.length; i++) {
     let x = lm + map(i, 0, HISTORY, 0, plotW);
     let w = plotW / HISTORY + 1;
-    if (vadHistory[i] > 0.5) {
-      fill(100, 255, 100, 160);
+    let v = vadHistory[i];
+    if (v > 0.5) {
+      fill(100, 255, 100, 180); // speech detected — green
+    } else if (v < -0.5) {
+      fill(80, 200, 200, 120); // VAD OFF (gate open) — muted cyan
     } else {
-      fill(60, 60, 80, 100);
+      fill(60, 60, 80, 120); // silence — dark
     }
     rect(x, vadY, w, BAR_H);
   }
-  fill(100, 255, 100);
-  textSize(9);
+
+  // VAD label — always visible, shows current state
+  let lastVad = vadHistory.length > 0 ? vadHistory[vadHistory.length - 1] : 0;
+  let vadStateText, vadLabelColor;
+  if (vadHistory.length === 0) {
+    vadStateText = 'VAD';
+    vadLabelColor = [120, 120, 120]; // grey — no data yet
+  } else if (lastVad < -0.5) {
+    vadStateText = 'VAD OFF';
+    vadLabelColor = [80, 200, 200]; // cyan — gate always open
+  } else if (lastVad > 0.5) {
+    vadStateText = 'VAD ON';
+    vadLabelColor = [100, 255, 100]; // green — speech
+  } else {
+    vadStateText = 'VAD ON';
+    vadLabelColor = [140, 140, 160]; // dim — silence (VAD active but quiet)
+  }
+  fill(vadLabelColor[0], vadLabelColor[1], vadLabelColor[2]);
+  textSize(14);
   textAlign(RIGHT, CENTER);
-  text('VAD', lm - 6, vadY + BAR_H / 2);
+  text(vadStateText, lm - 8, vadY + BAR_H / 2);
 
   // ── Prosody strips ──────────────────────────────────────────
   for (let ci = 0; ci < nCh; ci++) {
@@ -189,42 +305,90 @@ function draw() {
 
     // Label
     fill(ch.color[0], ch.color[1], ch.color[2]);
-    textSize(10);
+    textSize(14);
     textAlign(RIGHT, CENTER);
-    text(ch.label, lm - 6, y0 + (stripH - 4) / 2);
+    text(ch.label, lm - 8, y0 + (stripH - 4) / 2);
+
+    // Determine if this is F0 (scatter/segment style for unvoiced gaps)
+    let isF0 = key === 'F0semitoneFrom27.5Hz_sma3nz';
 
     // Line plot
     if (ch.data.length > 1) {
-      stroke(ch.color[0], ch.color[1], ch.color[2]);
-      strokeWeight(1.5);
-      noFill();
-      beginShape();
-      for (let i = 0; i < ch.data.length; i++) {
-        let x = lm + map(i, 0, HISTORY, 0, plotW);
-        let v = constrain(ch.data[i] / ch.hi, 0, 1);
-        let y = map(v, 0, 1, y1, y0);
-        vertex(x, y);
-      }
-      endShape();
+      if (isF0) {
+        // F0: draw only segments where value > 0 (skip unvoiced)
+        stroke(ch.color[0], ch.color[1], ch.color[2]);
+        strokeWeight(2);
+        noFill();
+        let inSegment = false;
+        for (let i = 0; i < ch.data.length; i++) {
+          let x = lm + map(i, 0, HISTORY, 0, plotW);
+          let raw = ch.data[i];
+          let v = constrain(raw / ch.hi, 0, 1);
+          let y = map(v, 0, 1, y1, y0);
+          if (raw > 0.5) {
+            if (!inSegment) {
+              beginShape();
+              inSegment = true;
+            }
+            vertex(x, y);
+          } else {
+            if (inSegment) {
+              endShape();
+              inSegment = false;
+            }
+          }
+        }
+        if (inSegment) endShape();
+      } else {
+        // Other features: continuous line + fill
+        stroke(ch.color[0], ch.color[1], ch.color[2]);
+        strokeWeight(2);
+        noFill();
+        beginShape();
+        for (let i = 0; i < ch.data.length; i++) {
+          let x = lm + map(i, 0, HISTORY, 0, plotW);
+          let v = constrain(ch.data[i] / ch.hi, 0, 1);
+          let y = map(v, 0, 1, y1, y0);
+          vertex(x, y);
+        }
+        endShape();
 
-      // Filled area
-      fill(ch.color[0], ch.color[1], ch.color[2], 40);
-      noStroke();
-      beginShape();
-      vertex(lm + map(0, 0, HISTORY, 0, plotW), y1);
-      for (let i = 0; i < ch.data.length; i++) {
-        let x = lm + map(i, 0, HISTORY, 0, plotW);
-        let v = constrain(ch.data[i] / ch.hi, 0, 1);
-        let y = map(v, 0, 1, y1, y0);
-        vertex(x, y);
+        // Filled area
+        fill(ch.color[0], ch.color[1], ch.color[2], 40);
+        noStroke();
+        beginShape();
+        vertex(lm + map(0, 0, HISTORY, 0, plotW), y1);
+        for (let i = 0; i < ch.data.length; i++) {
+          let x = lm + map(i, 0, HISTORY, 0, plotW);
+          let v = constrain(ch.data[i] / ch.hi, 0, 1);
+          let y = map(v, 0, 1, y1, y0);
+          vertex(x, y);
+        }
+        vertex(lm + map(ch.data.length - 1, 0, HISTORY, 0, plotW), y1);
+        endShape(CLOSE);
       }
-      vertex(lm + map(ch.data.length - 1, 0, HISTORY, 0, plotW), y1);
-      endShape(CLOSE);
     }
   }
 
-  // ── Connection indicator ─────────────────────────────────────
-  fill(connected ? color(100, 255, 100) : color(255, 80, 80));
+  // ── Control panel ────────────────────────────────────────────
+  stroke(50);
+  strokeWeight(1);
+  line(0, height - CTRL_H, width, height - CTRL_H);
   noStroke();
-  circle(width - 12, height - 15, 8);
+
+  let btns = btnLayout();
+  for (let b of btns) {
+    let hover = inRect(mouseX, mouseY, b.x, b.y, b.w, b.h);
+    drawBtn(b.x, b.y, b.w, b.h, b.label, b.bg, hover);
+  }
+
+  // ── Connection indicator (labeled) ──────────────────────────
+  let connColor = connected ? [100, 255, 100] : [255, 80, 80];
+  let connText = connected ? 'connected' : 'disconnected';
+  fill(connColor[0], connColor[1], connColor[2]);
+  noStroke();
+  circle(width - 16, height - CTRL_H / 2, 12);
+  textSize(13);
+  textAlign(RIGHT, CENTER);
+  text(connText, width - 28, height - CTRL_H / 2);
 }

@@ -11,4 +11,4 @@ if command -v conda &>/dev/null; then
     conda activate ML311
 fi
 
-python main.py "$@"
+python strip_monitor.py "$@"
