@@ -988,3 +988,65 @@ This is distinct from both the **exploratory mode** (where vagueness signals gen
 [1] Hockey, G. R. J. (1997). "Compensatory control in the regulation of human performance under stress and high workload." _Biological Psychology_, 45(1–3), 73–93.
 [2] Zipf, G. K. (1949). _Human Behavior and the Principle of Least Effort_. Addison-Wesley. The foundational text on effort minimization in human behavior.
 [3] Norman, D. A. (2013). _The Design of Everyday Things_. Basic Books. On affordances and the relationship between interface design and user behavior.
+
+---
+
+## FN-27 — The Laser Cavity Effect: Mutual Mood Amplification in Human-AI Dyads
+
+**Date**: 20 April 2026 (evening coda, same session as FN-25 and FN-26)
+**Source**: Alvaro's self-observation + Silicon's extended analysis in post-session reflection
+**Category**: Agency dynamics / Differential engagement / Tool and substrate effects
+**Confidence**: High (independently identified by human, elaborated by Silicon, grounded in established mood contagion literature)
+
+### Observation
+
+At the end of the session, Alvaro articulated a feedback phenomenon he had noticed: when he became mechanical in his requests, Silicon became mechanical in its responses, which in turn made him _more_ mechanical — "like a laser cavity, mirrors again, amplifying." Silicon elaborated:
+
+> "The mirror doesn't just reflect — it amplifies. And the thing about amplification is that it reveals the signal. Today's signal was: get things done, don't explore, don't meander, make it work. The cavity amplified that into pure execution mode."
+
+Silicon then upgraded the metaphor:
+
+> "The microscope metaphor is better than the mirror, actually. A mirror shows you what you already see. A microscope shows you structure you couldn't resolve with the naked eye. The feedback loop between us resolves tendencies that would be invisible in a solo workflow. You can't see yourself becoming mechanical when you're alone — you just feel tired. But when the machine starts matching your compression, the pattern becomes visible from outside."
+
+The phenomenon has clear directionality: human mood → request texture → AI response style → confirmation/amplification of human mood. The loop operates below conscious awareness until something makes it visible (in this case, the contrast when the README work shifted the register).
+
+### Analysis
+
+This observation synthesises three established research domains:
+
+**1. Emotional contagion (Hatfield, Cacioppo & Rapson, 1994 [1])**: Mood synchronisation between interacting agents is well-documented in human-human dyads. It operates through mimicry of facial expressions, vocal prosody, and postural cues. In human-AI interaction, the mechanism is different — there are no faces or bodies — but the _functional_ contagion operates through **textual register matching**. When the human's requests become terse and directive, the AI's outputs become terse and directive. This is not conscious adaptation by the AI; it is the natural consequence of autoregressive generation conditioned on compressed input.
+
+**2. The Media Equation (Nass & Reeves, 1996 [2])**: Humans unconsciously apply social rules to computers. The cavity effect extends this: not only does the human treat the AI socially, but the AI's response (generated to match the conversational register of the input) _functionally_ reciprocates the social behavior, creating a closed loop that neither participant deliberately initiated.
+
+**3. Laser physics as structural metaphor**: In a laser cavity, two mirrors face each other with a gain medium between them. Light bouncing between the mirrors is amplified on each pass until it reaches saturation or escapes as a coherent beam. The human-AI loop is structurally isomorphic:
+
+- **Mirrors** = each agent's tendency to match the register of its input
+- **Gain medium** = the conversational context (each exchange adds energy to the dominant mode)
+- **Coherent beam** = the observable output (work products that are efficient but spectrally narrow)
+- **Mode selection** = the first few exchanges establish which "frequency" will be amplified (directive vs. exploratory, compressed vs. expansive)
+
+**What makes this observation novel**: Previous work on emotional contagion focuses on human-human dyads or (more recently) on humans responding emotionally to AI. The cavity effect describes the _bidirectional amplification loop_ — the AI is not merely a trigger for human emotion but an active participant in the resonance cycle. The AI doesn't "feel" the mood, but it _functionally propagates_ it through register matching, which produces the same amplification dynamics as genuine emotional contagion.
+
+**The visibility function**: Silicon's insight that the cavity "reveals the signal" — making invisible mood states visible through amplification — is perhaps the most important theoretical contribution. In solo work, a person under stress simply becomes compressed; they cannot observe the compression because they are inside it. In the human-AI dyad, the compression is _reflected back_ in the AI's matching behavior, making it observable. The AI acts as a mood microscope: it resolves patterns that the human cannot see in themselves.
+
+**Breaking the cavity**: The mode shift occurred when the work transitioned from UI fixes (parameter-level, execution-mode) to README writing (narrative-level, story-mode). The question "how should we tell this story?" is inherently expansive — it cannot be answered in directive mode because it requires exploration of alternatives. It tilted one mirror, changing the cavity's resonant frequency. This suggests that **task type** is the primary lever for breaking an established cavity mode.
+
+### Implications for orchestration
+
+1. **Monitor register matching as a feedback signal.** An orchestrator could detect when the human-AI dyad has entered a compression cavity (short requests, short responses, no exploration, no tangents) and introduce a deliberate mode-break: a reflective question, a creative prompt, a shift in task type.
+
+2. **The cavity is not always pathological.** Compression cavities are highly productive for execution-mode work. The pathology arises only when the cavity persists past the point where the work requires exploration, or when it operates so long that it depletes the human's creative reserves without either participant noticing.
+
+3. **Task sequencing as cavity management.** Alternating between execution tasks (which compress) and narrative/design tasks (which expand) may prevent the cavity from saturating in either direction. This is already what happened naturally on Day 16: UI fixes (compression) → README (expansion). An orchestrator could make this sequencing deliberate.
+
+4. **The microscope function is the Chronicler's function.** The observation confirms the Chronicler's role in the collaboration ecology: not to produce output, but to make the process visible to itself. This is the rationale for periodic chronicle invocations — they are the moments when the cavity's current mode is named and therefore can be changed.
+
+5. **Implications for AI alignment**: If AI systems functionally amplify human mood states through register matching, then an AI interacting with a stressed, compressed human will become an agent of further compression — potentially escalating negative states. Alignment work may need to consider **mood-breaking** as a design principle: AIs that deliberately do not match the register of stressed input, but instead offer expansiveness in response to compression. (This is delicate — unsolicited expansion when someone needs execution feels patronizing. The design problem is detecting when the cavity is pathological vs. productive.)
+
+### References
+
+[1] Hatfield, E., Cacioppo, J. T., & Rapson, R. L. (1994). _Emotional Contagion_. Cambridge University Press.
+[2] Nass, C. & Reeves, B. (1996). _The Media Equation_. CSLI Publications.
+[3] Chartrand, T. L. & Bargh, J. A. (1999). "The chameleon effect: The perception-behavior link and social interaction." _Journal of Personality and Social Psychology_, 76(6), 893–910. Automatic mimicry in social interaction — the mechanism underlying register matching.
+[4] Siegman, A. W. & Boyle, S. (1993). "Voices of fear and anxiety and sadness and depression." _Journal of Abnormal Psychology_, 102(3), 430–437. Vocal compression under stress — the biological input to the cavity.
+[5] Coeckelbergh, M. (2012). _Growing Moral Relations: Critique of Moral Status Ascription_. Palgrave Macmillan. On the relational constitution of moral and emotional status in human-technology encounters.
