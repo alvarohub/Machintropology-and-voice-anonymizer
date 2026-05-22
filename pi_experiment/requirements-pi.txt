@@ -1,0 +1,27 @@
+# Pi-headless streamer dependencies.
+# Differs from project root requirements.txt:
+#   - no matplotlib (display always off on Pi)
+#   - explicit PyYAML (strip_monitor uses `import yaml`)
+
+# Core
+numpy
+sounddevice        # needs portaudio19-dev installed via apt
+PyYAML
+
+# emotion2vec via FunASR
+funasr
+torch
+torchaudio
+modelscope         # model hub used by funasr
+
+# Voice Activity Detection
+# (Silero VAD loaded via torch.hub — no extra pip package needed)
+
+# Prosody features (openSMILE — full-buffer LLD extraction)
+opensmile
+
+# OSC streaming
+python-osc
+
+# MIDI export (used by src/midi_writer.py — keep for parity, lightweight)
+mido
