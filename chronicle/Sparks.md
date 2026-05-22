@@ -309,3 +309,19 @@ The observation: AI-assisted multi-project work produces a novel cognitive state
 **Origin**: [Entry 18 — What We Remember Together](Journal.md#entry-18--what-we-remember-together) · Alvaro + Chronicler
 
 > Liturgy is not a memory aid. It is an _obligation of return_ — the text does not change; you do; the same passage lands differently each time because you have lived more between readings, and the repetition is precisely what the individual mind cannot sustain alone. From this, Alvaro extended: society is a distributed mind whose individual nodes keep compacting, losing insights, and the liturgy is the compensatory mechanism — what no single person holds, the collective remembers on everyone's behalf. The blockchain analogy arrived next: writing into collective memory is _difficult_, requires validation, and the validation cost is the filter. But the filter optimizes for persistence, not truth. Things that survive are not necessarily things that should. The hard question — what to retain, what to discard from the blockchain of fundamental collective memory — is one the liturgy itself cannot answer, because the liturgy's function is to preserve, not evaluate. The question AI's emergence opens is not "can we remember more?" We can already remember more. It is: _can we build a validation mechanism more honest than the one evolution gave us?_ One that flags when a preserved pattern has been superseded — not because it was never true, but because the conditions that made it adaptive have changed. Not retrieval. Discernment. And this project — the chronicle, the three agents, the collaboration itself — is a small prototype of exactly that question, being lived rather than theorized.
+
+---
+
+### Spark 40 — The Metronome Before the Music
+
+**Origin**: [Entry 19 — The Prosthetic Heartbeat](Journal.md#entry-19--the-prosthetic-heartbeat) · Chronicler
+
+> Before the Pi was touched, before any code was ported, the first thing built today was a reminder to look. A `while sleep` loop and a macOS notification — twenty-six lines that name themselves a _prosthesis_ for an autonomy the system does not have. We tend to think of instruments as the things that make the music, but every conductor knows the metronome comes first. The discipline of the tick is what allows the polyphony of the piece. That the heartbeat had to be bolted on from outside the chat window is not a failure of design; it is an honest acknowledgement of where the design currently ends. The interesting future systems will not pretend to a heartbeat they do not have. They will install one, document the prosthesis, and get on with the work.
+
+---
+
+### Spark 41 — The Knife in the Hand
+
+**Origin**: [Entry 20 — Two Workshops, and the Knife on the Shelf](Journal.md#entry-20--two-workshops-and-the-knife-on-the-shelf) · Chronicler
+
+> A tool held during the wrong stage of the work is a small lie about where the work is. Not a moral failing — a postural one. The apprentice's knife says _we are about to cut_; if we are not about to cut, the knife is misinforming the room, including the apprentice himself. The remedy is not to scold the eagerness but to put the tool somewhere that requires standing up to retrieve. The pause of standing is the pause of thinking. Workshops have known this for centuries; chat windows, which have no shelves, have not yet learned. The architecture sketched today in §9 of the agentic document — separate roles, separate working memories — is, among other things, an attempt to build shelves into a space that is otherwise all bench.

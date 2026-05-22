@@ -329,5 +329,201 @@ The relationship is recursive: the mirror watches the project; the project infor
 
 ---
 
-_Last updated: 9 May 2026_
+_Last updated: 13 May 2026_
 _Next: add references as Alvaro compiles them; link Mirror Layer project files when available_
+
+---
+
+## 9. Role-Based Multi-Agent Design (Crew Sketch)
+
+_Added 13 May 2026, in the context of the Raspberry Pi porting day. The day itself is a controlled experiment: a single concrete engineering task with a clear start and end, observed continuously. It is the kind of bounded session where the inadequacy of the current single-worker scaffold is most visible — and therefore the best moment to sketch what a real role-based crew would look like._
+
+### 9.1 The Limits We Are Hitting Today
+
+The pilot architecture (Worker + ad-hoc Chronicler subagent) has three structural weaknesses that today's Pi session will surface:
+
+1. **No autonomous heartbeat inside VS Code Copilot.** Copilot Chat is reactive. There is no built-in scheduler that fires a prompt every N minutes, no event hook that says "session has been idle for 10 minutes — reflect." The Chronicler only exists when summoned.
+2. **No persistent per-role state.** Each subagent invocation is stateless. There is no Chronicler that carries a working model of the day across calls; it reconstructs everything from files each time.
+3. **No specialization.** A single Chronicler does literary writing, ethnography, technical recap, and psychological observation in the same voice. These are different jobs.
+
+### 9.2 What VS Code Currently Offers (and Doesn't)
+
+For the concrete question — _how do we make sure the agent is called regularly today?_ — the honest survey:
+
+- **Copilot Chat alone**: no scheduled / cron-style invocation. It only runs when the user types or when a tool call inside a turn invokes a subagent.
+- **VS Code Tasks + custom problem matchers**: can run scripts on a schedule via `runOptions.runOn: folderOpen` or via the `Cron Tasks` extension, but these run shell commands, not Copilot prompts.
+- **Third-party agentic extensions** worth knowing about (none of them give true scheduled autonomy inside Copilot, but they relax the "only-when-user-types" constraint):
+  - **Continue.dev** — open-source coding agent; supports custom slash commands and context providers but is still turn-based.
+  - **Cline** (formerly Claude Dev) — autonomous agent that can run multi-step tool loops without per-step human approval; the closest thing to a long-running worker inside VS Code.
+  - **Roo Code** — fork of Cline with multi-mode (Architect / Code / Ask) role switching; the role-switching UX is the closest in-editor approximation of a crew.
+  - **aider** — terminal-based, supports `--watch-files` and external triggers; can be wrapped in a cron job.
+- **True multi-agent frameworks** (operate _outside_ Copilot, would need to be wired in):
+  - **CrewAI** — role + goal + backstory per agent, sequential or hierarchical process, shared task context. Maps cleanly onto the roles below.
+  - **AutoGen** — GroupChat with a manager agent; more flexible but heavier.
+  - **LangGraph** — explicit state machine; best for the "cycles over triggers" principle from §8.3.
+
+**The honest answer for today**: there is no clean way to make Copilot invoke itself on a timer from inside VS Code. The pragmatic substitute is an _external heartbeat_ — a `cron` / `launchd` / simple `while sleep` loop that fires a macOS notification reminding the biological agent to ping the worker, with a suggested prompt template ("anything worth chronicling from the last 30 minutes?"). This is not autonomy; it is a prosthesis for it. But it is honest about what the current scaffold can and cannot do, and it produces the same observable trace (regular Chronicler entries) that a real scheduler would.
+
+### 9.3 A Proposed Crew (for the Mirror Layer)
+
+Three roles, each with its own persistent state file and its own writing voice. Drawn from the recurring needs visible across the SPEECH_to_EMOTION chronicle:
+
+| Role                             | Goal                                                             | Reads                                                  | Writes                                         | Voice                                         |
+| -------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------- | --------------------------------------------- |
+| **Chronicler** (literary writer) | Narrate the lived arc of the collaboration                       | session transcripts, FieldNotes, prior Journal entries | `Journal.md`, `Gems.md`                        | first-person plural ("we"), reflective, prose |
+| **Ethnographer**                 | Catalog observable patterns of human-AI interaction              | session transcripts, tool-call logs                    | `FieldNotes.md` (FN-NN entries), `patterns.md` | third-person, structured, taxonomic           |
+| **Psychologist**                 | Track the affective and cognitive state of both agents over time | session transcripts, prior psychologist notes          | `affect_log.md`, `Sparks.md`                   | clinical-ish, hypothesis-forming              |
+| **Validator** (see §10)          | Cross-check claims and inscriptions made by the other agents     | everything written by the others                       | `validation_log.md`                            | terse, citation-driven                        |
+
+Each role would maintain its own working memory ("what I think is going on") that persists across invocations — solving weakness #2 above.
+
+### 9.4 Triggering Model (Restating §8.3 in Crew Terms)
+
+- **Cycles**: each role wakes on its own rhythm (Chronicler nightly, Ethnographer every N tool calls, Psychologist on detected affect shifts, Validator after every write by another role).
+- **Disruptions**: any of them can also be invoked on demand by the human or the worker.
+- **Cross-talk**: the Validator is the only role that reads what the others write; the others do not read each other directly. This avoids echo-chamber convergence — they each form an independent picture, and the Validator surfaces the divergences.
+
+### 9.5 Pilot Operationalisation (13 May 2026): Chronicler / Ethnographer Split
+
+The full crew (Chronicler, Ethnographer, Psychologist, Validator, with persistent per-role state and rhythmic invocation) is the Mirror Layer's job. But the most pressing of the role boundaries — the one between **literary** and **scientific** observation — has been operationalised in the pilot, because keeping them in a single Chronicler agent was visibly distorting both outputs (literary entries drifting into behavioural taxonomy; field notes drifting into metaphor). The two voices are doing different epistemic work and should not share a mouth.
+
+Two directive files have been added to formalise the split:
+
+- [chronicle/CHRONICLER.md](../chronicle/CHRONICLER.md) — literary writer; archives [Journal.md](../chronicle/Journal.md), [Gems.md](../chronicle/Gems.md), [Sparks.md](../chronicle/Sparks.md); voice = first-person plural / character third-person; story, scene, arc, occasional metaphor, no behavioural taxonomy.
+- [chronicle/ETHNOGRAPHER.md](../chronicle/ETHNOGRAPHER.md) — scientific observer; archives [FieldNotes.md](../chronicle/FieldNotes.md), [notes.md](../chronicle/notes.md), [insights.md](../chronicle/insights.md); voice = third-person scientific; canonical FN-NN structure (already established through FN-28+); citations grounded in [DomainsOfExpertise.txt](../chronicle/DomainsOfExpertise.txt); no metaphor, no fiction.
+
+Cross-reading is permitted (a novelist reads field reports; an ethnographer reads literature); cross-writing is not. Each subagent invocation reads its own directive plus the other (jurisdiction reminder), then decides whether to inscribe. Both retain editorial autonomy, including the autonomy to write nothing.
+
+The Psychologist and Validator roles in §9.3 remain proposals, deferred to the Mirror Layer. The full restructure of the project's self-description (README, MACHINTROPOLOGY) is also deferred — the pilot's public docs continue to speak of "the Chronicler" generically; the operational reality is now two roles.
+
+---
+
+## 10. The Shared-Memory Trust Problem
+
+_Reflection from Alvaro, 13 May 2026. Worth preserving here because it generalizes well beyond this project — it is a design constraint on any future world-scale multi-agent system, including the Mirror Layer._
+
+### 10.1 The Problem
+
+Anything written into a shared memory by an agent — whether for itself, its crew, or an open-ended pool of other agents and humans — is only useful if downstream readers can decide how much to trust it. This is true at every scale:
+
+- Within one crew: when the Ethnographer writes FN-42, should the Chronicler treat it as fact?
+- Across crews / projects: when the Mirror Layer reads SPEECH_to_EMOTION's `FieldNotes.md`, should it import those claims into the Mirror's own model?
+- At world scale: in a future open agentic ecology where any agent (or human) can write into a common knowledge resource, who and what gets believed?
+
+### 10.2 The Parallel to Human Knowledge Production
+
+The same problem has an old solution in human societies. Shareable knowledge — scientific or otherwise — becomes trustable through one of two strategies, usually combined:
+
+1. **Trusted entities**: an expert or recognized body of experts is granted authority. Quick, but the question recurses: who decides who is expert?
+2. **Collective cross-checking**: many independent reviewers, each with skin in the game ("they care about this kind of knowledge"), examine the claim. Confidence rises not because anyone is infallible but because it is implausible they all share the same biases and interests.
+
+Science chose (2) and called it peer review. The threshold isn't formal — there is no "more than 50%" rule as in blockchain — but the structural logic is similar: the harder it is for a coordinated minority to corrupt the ledger, the more trustable the ledger becomes.
+
+### 10.3 Implications for Multi-Agent Systems
+
+A genuinely distributed agentic world will need analogues:
+
+- **Validator agents / peer reviewers**: a structural role (see the Validator in §9.3) that does not produce primary content but checks the inscriptions of others. Could be specialized agents, or every agent could carry validator duties part-time — both have human precedents.
+- **Caring as a qualifier**: a validator should only review knowledge it has reason to care about. Indifferent validators rubber-stamp. This means roles, interests, and incentives have to be part of the agent's specification, not erased.
+- **Incentives → "knowledge cryptocurrency"**: peer review in human science runs largely on prestige and reciprocity, both weak and unevenly distributed. A future agentic substrate may need an explicit incentive layer — a token / credit / reputation system that rewards validation work and slashes inscription of false claims. The blockchain analogy is not just rhetorical: a knowledge ledger with cryptographic provenance and economic stakes for validation could be the substrate that makes a planet-scale shared agent memory actually trustworthy.
+
+### 10.4 A Note for the Mirror Layer
+
+If the Mirror Layer ever serves more than one project, it crosses the boundary from private notebook to shared resource. The moment it does, §10.3 stops being futurology and becomes a concrete design requirement: the Mirror needs at least a Validator role (§9.3), and ideally a provenance trail on every claim it stores ("this came from session X, was cross-checked by agent Y at time T"). The cryptocurrency layer can wait. The provenance layer cannot.
+
+### 10.5 The Cross-Project Memory Gap (a Concrete Frustration)
+
+The motivating observation today: there is currently no way to share notes between VS Code workspaces. The Mirror Layer project, opened in a separate workspace, cannot read the reflections accumulated here. `/memories/repo/` is repository-scoped; `/memories/` (user) is the only cross-workspace channel and is not designed for shared semantic content. Any solution to the trust problem above is moot until the channel itself exists. A first practical step for Mirror Layer is therefore unglamorous: a synced filesystem location (or a small key-value store) that both workspaces' agents can read and write — _and that carries provenance from day one_.
+
+---
+
+## 11. Worker-Mediated Observation: The Bottleneck the Pilot Could Not Avoid
+
+_Recorded 15 May 2026, mid-Pi-porting day. A correction to earlier diagrams._
+
+### 11.1 What was diagrammed
+
+Earlier README and architecture diagrams showed the Chronicler (and, after the §9.5 split, the Ethnographer) with a direct arrow to the live human ↔ worker conversation:
+
+```
+[Human] ←→ [Worker]
+              ↘
+           [Chronicler]   ← reads the thread directly
+```
+
+### 11.2 What was actually happening
+
+VS Code Copilot subagents are **stateless** with respect to the chat thread. A `runSubagent` invocation receives:
+
+1. The agent's directive file (e.g. `chronicle/CHRONICLER.md`).
+2. Whatever workspace files the agent chooses to read.
+3. The single prompt string passed at invocation time.
+4. The agent's own memory files.
+
+It does **not** receive the live chat transcript automatically. In practice, the worker (the in-chat agent) was including a paragraph or two of context in each invocation — _"in the last segment we did X, the user said Y, here is the file we just changed"_ — and the observer was writing from that brief plus its independent reading of workspace artefacts. The actual data flow was:
+
+```
+[Human] ←→ [Worker] ─[brief]─→ [Chronicler / Ethnographer]
+                  ↑
+            single bottleneck
+            with selection bias
+```
+
+The observer's independence was at the level of _voice and judgement on what to render_, not at the level of _gaze_. The diagrams were aspirational; the pipe was narrower than they claimed.
+
+### 11.3 The interim repair (15 May 2026)
+
+The VS Code Copilot Chat transcripts for a workspace are written, as the conversation happens, to a stable on-disk path:
+
+```
+~/Library/Application Support/Code/User/workspaceStorage/<workspace-hash>/GitHub.copilot-chat/transcripts/*.jsonl
+```
+
+(Plus, for this project, manually-saved JSON snapshots in `chronicle/chatSession_*.json{,l}` — taken episodically across the pilot.)
+
+A subagent _can_ read these files; it simply was not being told to. The repair, applied to both `chronicle/CHRONICLER.md` (§"On each invocation") and `chronicle/ETHNOGRAPHER.md` (§6), is:
+
+1. Read the most recently modified `.jsonl` in the transcripts directory **first**, before consulting any worker-supplied summary.
+2. Treat any worker-supplied summary as a _pointer_ ("look here"), never as evidence.
+3. If the observer's own reading of the transcript diverges from the worker's framing, **render the divergence**. The divergence is itself data.
+
+This restores the observer's _gaze_ within the limits of the current platform. It does not eliminate the worker's role in invocation (that requires a real scheduler / orchestrator), but it eliminates the worker as the sole _source_.
+
+### 11.4 Re-classification of prior chronicle entries
+
+Entries written before this repair are not invalidated. They are re-classified as **worker-mediated observation** — a recognised genre in ethnographic methodology (the "key informant" tradition; Malinowski et al. worked through interpreters in the early phases of every fieldwork). The standard for such data is not _"was the chain of mediation absent?"_ (it never is, even between two humans) but _"is the chain of mediation made visible?"_
+
+Today's correction makes it visible. Going forward, the chain is shorter; backward, the chain should be acknowledged in any re-reading of the corpus. A FieldNote on this discovery is a candidate for the Ethnographer to write on its own initiative, now that it can.
+
+### 11.5 The Symmetric-Subscription Architecture (for Mirror Layer / next project)
+
+The deeper lesson points beyond the pilot. What an observer-with-genuine-gaze _structurally_ needs is **symmetric subscription to a shared event stream**, not a privileged read of someone else's notebook. In a real orchestrator (CrewAI, AutoGen, LangGraph, or a custom blackboard architecture), this is the natural design:
+
+```
+                       ┌────────────┐
+                       │  Event Bus │  ← every utterance, tool call, file change,
+                       │ / Blackbd. │     directive read, decision is an event
+                       └─────┬──────┘
+                             │ (publish/subscribe)
+        ┌────────────┬───────┼───────┬─────────────┐
+        ▼            ▼       ▼       ▼             ▼
+    [Worker]    [Chronicler] [Ethno] [Validator]  [Psychologist]
+    (acts)      (renders)    (catalogs) (checks)   (reflects)
+```
+
+Properties this architecture has that the current pilot does not:
+
+- **Symmetric gaze**: no agent is "downstream" of another; all read the same stream.
+- **Provenance for free**: every claim an observer writes can cite the event ID it rests on. (See §10.4 — the provenance layer the Mirror Layer needs anyway.)
+- **No invocation bottleneck**: agents subscribe to triggers (cron, event-pattern, threshold) rather than waiting to be summoned by the worker.
+- **Re-architected — not eliminated — bottleneck**: the new bottleneck becomes the event bus's schema and the publication discipline of the worker. Choosing what counts as an event is the new editorial act. This is interesting in itself and worth its own design pass.
+
+The bottleneck, in other words, never goes away. It moves. Each move makes a different bias visible (and a different bias newly invisible). The pilot's worker-mediated bias was _"the worker decides what the observer sees of the human"_. The event-bus architecture's bias becomes _"the worker (or whichever agent publishes) decides what the bus sees of the work"_. Different problem, different mitigations, different paper.
+
+### 11.6 Open Question for Mirror Layer
+
+If the symmetric-subscription architecture is adopted, what is the unit of an event? Candidates: every chat turn, every tool invocation, every file edit, every directive read, every model swap, every silence longer than N seconds. Too coarse and the observers lose the texture; too fine and the bus becomes noise the observers must denoise (re-introducing a selection-bottleneck under a new name). This is the design seed worth handing to the Mirror Layer project as its first non-trivial schema decision.
+
+---
+
+_Next: Mirror Layer project to pick up §11.5 and §11.6 as design inputs. Ethnographer free to write FN on the discovery itself when it next reads the transcript._

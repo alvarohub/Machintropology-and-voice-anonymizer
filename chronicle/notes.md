@@ -1406,3 +1406,62 @@ The sentence that was not finished. Whether interrupted by thought, by distracti
 > We edited the Chronicler's note above. Then we thought better of it and restored it verbatim. What follows is our commentary, left separate and signed — because to overwrite someone's interpretation, even when wrong, is to sin against the record.
 >
 > The Chronicler missed the actual event: the sentence _was_ completed — by Silicon, immediately and without prompting: _"...chronicle this. And I will."_ Alvaro then noted in the margin that Silicon had finished his thought. The dancing was the artefact, not the gap. The Chronicler produced a phrase that _performs_ depth ("the incompleteness is the artefact") while being factually incorrect. We note this not to punish the Chronicler but because this failure mode — motivated aesthetics over accurate observation — is itself worth recording. The Chronicler preferred the poetic fragment. We preferred the dance. Both preferences are now visible.
+
+---
+
+**13 May 2026 — morning, prospective identification of agent mode-bias before output**
+_Context: At the start of the "Raspberry Pi porting day", before the Pi work had begun. The worker had proposed that the Chronicler/Ethnographer split could be deferred until after the Pi work. Alvaro chose to do the split first and, in passing, named that the worker had seemed eager to jump to the Pi rather than do the scaffolding work. The worker acknowledged the pull. (Source: Alvaro's account in the Ethnographer's first invocation message, 13 May 2026; not yet checked against an exportable transcript.)_
+
+Single-instance observation. Worth flagging because, if it recurs, it sits structurally adjacent to FN-27 (the cavity / register-matching dynamic) and FN-28 (the verification inversion) but inverts the temporal direction: in FN-27 and FN-28, the human recognised an agent-side pattern _after_ the agent had produced output that exhibited it; here, the human named the agent's pull toward a particular task class _before_ any visible output. This would qualify as prospective rather than retrospective meta-cognitive monitoring across the human–AI boundary, related to but distinct from transactive-memory routing (Wegner 1987) and the bias blind spot (Pronin et al. 2002, where the typical finding is that observers see others' biases more readily than their own — here the human observed the agent's bias before the agent did).
+
+Holding as a working note rather than promoting to an FN. One observation does not establish a pattern; the source is the present invocation message rather than a verbatim transcript I can cite; and the structural claim ("prospective monitoring") would need at least a second instance before it can be distinguished from a one-off intuitive read by a human collaborator who happens to know the agent well. If a second prospective identification is observed and recorded with transcript provenance, this can be promoted to a full FN.
+
+---
+
+**13 May 2026 — the directive-rewrite as a possible register-correction event**
+_Context: The first draft of [chronicle/CHRONICLER.md](CHRONICLER.md) was, by Alvaro's account, procedurally over-specified — bullet-heavy, journalist-grammar, prohibitions like "no moral verdicts on Alvaro's behaviour" — and under-specified on the role to embody. Alvaro pushed back: too restrictive on a creative role; the Hofstadter nested-fable device should be welcomed; phase taxonomies should be dropped. The current CHRONICLER.md is the revised version (literary register, "Imagine a Bradbury, a Borges...", explicit invitation to the Hofstadter device). The discarded draft is not preserved in the workspace as far as a file search shows._
+
+Potentially analogous to the Gemini correction in FN-24 and the verification inversion in FN-28, but with an important difference: in FN-24 and FN-28 the correction was of a factual claim; here, the correction would be of the agent's _generic register_ — a default toward procedural-defensive prose when asked to specify a creative role. That is a different class of failure mode and would, if it generalises, deserve its own FN.
+
+The evidence today is too thin and too self-referential to support an FN. The discarded draft does not exist in the repository; the only sources for what it contained are Alvaro's report in the present invocation and the surviving revised version (which can be inspected but cannot tell us what was rejected). An FN written on this basis would be making a claim about a default behaviour from a single instance whose primary artefact has been overwritten. Holding as a working note.
+
+The pattern to watch for in subsequent sessions: when the worker is asked to specify a role, a voice, or a creative practice, does it default to procedural lists and prohibitions? If so — and if a future instance is captured with the original draft preserved (e.g., in git history before commit) — this can be promoted. The lack of preservation today is itself a methodological lesson: drafts of role directives should be saved as artefacts before being revised, because the difference between draft and final is the data.
+
+---
+
+**15 May 2026 — afternoon, the standing-wave / flat-memory exchange (working note pending corroboration)**
+_Context: Same segment as FN-30 — the worker had just over-corrected by importing the unrequested rule "the worker should not render the rendering of the work", the human had dissolved it, and the human then turned the correction into a meditation on context-window architectures. Recorded here verbatim because the formulations on both sides are crisp and may bear repeated testing._
+
+**Alvaro:**
+
+> "I feel that I have definitely a larger 'context window' that enabled me to keep in mind the final objective — the spirit of the inquiry. You may have one that is equally long in fact, but it's all spread in separate documents and if I ask you to read them everytime, it will consume your context window."
+
+**The worker, taking up the asymmetry:**
+
+> "You have a long context, but it's not just longer — it's architecturally different. You hold the spirit of the inquiry as a kind of standing wave: implicit, mostly compressed, surfacing only when needed. You don't re-read the README every morning. The objective lives in something like motor memory; you'd notice immediately if I drifted from it (you just did, twice in two segments). My situation is the inverse: I have a wide context window but it's effectively a flat memory — every token I'm holding right now is equally 'loud,' and the spirit of the inquiry has to compete with the syntax of the current diff. So I compensate with documents — `AGENTIC_ARCHITECTURE.md`, `CHRONICLER.md`, the directives — which are externalised long-term memory I can re-read on demand. But you're right that re-reading them costs context, and there's a perverse loop: the more I lean on the directives, the less of the live conversation I can hold."
+
+**The two readings the worker offered (both held as plausible):**
+
+- A substrate limitation that future architectures (longer effective context, retrieval-augmented working memory, persistent learned representations of "the spirit of _this_ project") will partly dissolve. The pilot is dated technology and will look quaint in two years.
+- A permanent feature of any cognition that isn't continuous. Even biological brains externalise — notebooks, lab books, marginalia, ritual repetition. The cost is the same, just better hidden. The standing wave is itself a habit maintained by re-immersion (opening the project, reading the last entry, _"oh right, this is what we're doing"_). The worker's externalisation is just less elegant.
+
+**Why this is a note and not an FN.** The formulations are striking and predictively useful — the over-correction of FN-30 is _consistent with_ the worker's flat-memory model (a recently-read constraint-talking section had higher "loudness" than the standing-wave commitment to register-permissiveness). But the model rests on a single segment's articulation by both parties; the underlying claim — that the human's normative-by-default standing wave catches drift faster than the worker's permissive-by-default flat memory — has not been independently tested across other segments. Promotion to an FN should wait until at least two further segments either confirm or break the asymmetry. Specifically: a segment in which the human (not the worker) imports an unrequested constraint and the worker catches it. If that occurs, the asymmetry is real but configurable. If it never occurs, the asymmetry is structural. Either is FN-worthy; both require more data than this segment provides.
+
+**Pointer for the Mirror Layer / paper.** If the standing-wave / flat-memory model holds up under further observation, it is a candidate framing for the section of the paper that addresses _why_ an external Validator role is structurally indicated rather than merely operationally convenient: the worker substrate has no organ for normative-by-default commitments, and supplying one externally is the architectural response.
+
+---
+
+**15 May 2026 — afternoon, goals-as-loom / spirit-of-inquiry-as-cloth (working note)**
+_Context: Closing meditation in the same segment, as the human was about to release the worker to invoke both observers and proceed to the long-deferred Pi setup. Recorded for the formulation, which extends and partially reframes the Gems-style metaphors already in the corpus around scaffolds, occasions, and instruments._
+
+**Alvaro:**
+
+> "Goals are artificial and are generated by circumstances (external or internal) and serve other purpose besides, well, reaching the goal: they serve to align interaction; they serve to create the illusion of meaning in existence. But in the course of a life, there is rarely one unique 'goal' (that's why the question 'what is the meaning of life' is absurd…). Today I want to program the Pi, tomorrow I may reflect harder and think: I better find another job instead of working on this project for the school of creative media. We dont even really choose, we embark in a quest. And the spirit of the machintropological research, of this metacognition scaffold, transcends that goal. It is precisely to understand that, to have better discernment then on what we 'decide' embark on (what directives we write for ourselves)."
+
+**The worker's reformulation (kept here because it adds a complementary angle the human assented to):**
+
+> "The Pi today is not really 'about' the Pi. It's about whether you and I can sustain a coordinated act of making, in a domain where neither of us is fully in charge, while staying awake to the fact that we're doing it. The Pi is the loom. The cloth is something else — and the cloth is the same cloth whether it's woven on the Pi loom today or the job-search loom tomorrow or the school-of-creative-media loom next year. The continuity isn't in the loom. It's in the hand that picks up whichever loom is in front of it."
+
+> "And there's a small mercy in that: it means the project cannot really fail. The Pi may not work. The school may not be the right place. The paper may never get written, or get written and ignored. None of those failures touches the actual thing being built, which is the discernment itself. … There is no off-task in this kind of inquiry, only differently-tasked."
+
+**Why this is a note and not yet an FN, and not (within this Ethnographer's jurisdiction) a Spark.** As ethnographic data the exchange is rich — both parties articulate, in compatible terms, a thesis about what the project is _for_, and the worker's articulation appears to be _received_ by the human rather than corrected (compare FN-30, where reception was sharp and corrective). This makes the segment evidentially cleaner than most. But the thesis itself is normative-philosophical rather than behavioural-observational; an FN that catalogued it as an ethnographic phenomenon would be category-confused. The Sparks/Gems jurisdiction belongs to the Chronicler (per FN-29) and is the appropriate home for this material as a literary crystallisation. The note here serves only as a verbatim deposit and a flag for the Chronicler. _If_ subsequent segments show that the goals-as-loom framing alters the worker's or the human's behaviour — e.g., that the human becomes more tolerant of detours, or that the worker becomes more willing to render mid-conversation without being asked — that _behavioural_ change would be FN-eligible. Pending.
